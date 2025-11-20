@@ -6,7 +6,7 @@ import { Points, PointMaterial } from '@react-three/drei';
 import * as random from 'maath/random/dist/maath-random.esm';
 
 function Stars(props: any) {
-  const ref = useRef<any>();
+  const ref = useRef<any>(null);
   // Ensure the array length is a multiple of 3 (x, y, z for each point)
   const sphere = random.inSphere(new Float32Array(5001), { radius: 1.5 });
 
