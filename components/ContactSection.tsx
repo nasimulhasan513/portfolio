@@ -14,9 +14,9 @@ export default function ContactSection() {
           </p>
           
           <div className="glass-card p-8 rounded-2xl inline-flex flex-col items-center gap-6 w-full md:w-auto">
-            <a href="mailto:contact@example.com" className="flex items-center gap-3 text-xl font-medium text-white hover:text-primary-400 transition-colors">
+            <a href="mailto:contact@nasimulhasan.me" className="flex items-center gap-3 text-xl font-medium text-white hover:text-primary-400 transition-colors">
               <Mail className="w-6 h-6" />
-              contact@example.com
+              contact@nasimulhasan.me
             </a>
             
             <div className="flex gap-6">
