@@ -2,11 +2,17 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
+
+const Background3D = dynamic(() => import('./Background3D'), { ssr: false });
 
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background Elements */}
+      {/* 3D Background */}
+      <Background3D />
+
+      {/* Background Elements (Fallback/Overlay) */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <motion.div 
           animate={{ 
