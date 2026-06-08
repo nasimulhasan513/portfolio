@@ -2,67 +2,37 @@
 @config "../tailwind.config.ts";
 
 @theme {
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-outfit);
+  --font-sans: var(--font-space-grotesk);
+  --font-display: var(--font-archivo);
+  --font-mono: var(--font-jetbrains-mono);
 
-  --color-primary-50: #f0f9ff;
-  --color-primary-100: #e0f2fe;
-  --color-primary-200: #bae6fd;
-  --color-primary-300: #7dd3fc;
-  --color-primary-400: #38bdf8;
-  --color-primary-500: #0ea5e9;
-  --color-primary-600: #0284c7;
-  --color-primary-700: #0369a1;
-  --color-primary-800: #075985;
-  --color-primary-900: #0c4a6e;
-  --color-primary-950: #082f49;
+  --color-paper: #f8fafc;
+  --color-ink: #1e293b;
+  --color-ink-soft: #475569;
+  --color-ink-muted: #64748b;
 
-  --color-dark-bg: #0f172a;
-  --color-dark-surface: #1e293b;
-  --color-dark-border: #334155;
+  --color-primary-50: #faf6f2;
+  --color-primary-100: #f1e7dd;
+  --color-primary-200: #e2cdb9;
+  --color-primary-300: #cfae92;
+  --color-primary-400: #b58c6b;
+  --color-primary-500: #97694a;
+  --color-primary-600: #75543b;
+  --color-primary-700: #5e4330;
+  --color-primary-800: #4a3526;
+  --color-primary-900: #3b2a1f;
 
-  --animate-fade-in: fadeIn 0.5s ease-out;
-  --animate-slide-up: slideUp 0.5s ease-out;
-  --animate-float: float 6s ease-in-out infinite;
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-    }
-  }
-
-  @keyframes slideUp {
-    0% {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes float {
-
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-
-    50% {
-      transform: translateY(-20px);
-    }
-  }
+  --color-warm: #f97316;
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-slate-950 text-slate-200 antialiased selection:bg-primary-500/30 selection:text-primary-200;
+    @apply bg-paper text-ink antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   h1,
@@ -71,20 +41,81 @@
   h4,
   h5,
   h6 {
-    @apply font-display font-bold text-white;
+    @apply font-display font-bold text-ink tracking-tight;
+  }
+
+  ::selection {
+    @apply bg-primary-600/15 text-primary-700;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
 @layer components {
-  .glass {
-    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  /* Consistent page gutters + max width */
+  .container-px {
+    @apply px-5 sm:px-8 lg:px-12 max-w-6xl mx-auto;
   }
 
-  .glass-card {
-    @apply bg-slate-900/50 backdrop-blur-md border border-slate-800 hover:border-slate-700 transition-colors duration-300;
+  .container-narrow {
+    @apply px-5 sm:px-8 max-w-3xl mx-auto;
   }
 
-  .container-padding {
-    @apply px-6 md:px-12 lg:px-24 max-w-7xl mx-auto;
+  /* Clean white card */
+  .card {
+    @apply bg-white border border-slate-200/80 rounded-2xl shadow-sm;
+  }
+
+  /* Technical mono eyebrow with an index marker */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary-600;
+  }
+
+  .eyebrow::before {
+    content: "";
+    @apply h-px w-6 bg-primary-600/50;
+  }
+
+  /* Big editorial section index, e.g. 01 / 02 */
+  .section-index {
+    @apply font-mono text-sm text-ink-muted;
+  }
+
+  /* Hero/initial fade */
+  .reveal {
+    @apply animate-fade-up;
+  }
+}
+
+/* --- Scroll reveal (whisper motion) --- */
+.js-reveal .reveal-up {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.js-reveal .reveal-up.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal .reveal-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
