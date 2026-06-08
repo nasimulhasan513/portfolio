@@ -1,31 +1,61 @@
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Facebook, Instagram, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 border-t border-slate-800 py-12">
-      <div className="container-padding flex flex-col md:flex-row justify-between items-center">
-        <div className="mb-6 md:mb-0">
-          <h3 className="text-xl font-bold text-white mb-2">Nasimul Hasan Deep</h3>
-          <p className="text-slate-400 text-sm">Building scalable systems & digital products.</p>
+    <footer className="bg-paper border-t border-slate-200 py-10">
+      <div className="container-px flex flex-col items-center justify-between gap-6 sm:flex-row">
+        <div className="text-center sm:text-left">
+          <p className="font-display text-lg font-bold text-ink">Nasimul Hasan Deep</p>
+          <p className="text-sm text-ink-muted">
+            © {new Date().getFullYear()} · Built and designed by me.
+          </p>
         </div>
-        
-        <div className="flex space-x-6">
-          <a href="https://github.com/nasimulhasan513" target="_blank" rel="noopener noreferrer" 
-             className="text-slate-400 hover:text-white transition-colors">
-            <Github className="w-5 h-5" />
+
+        <div className="flex gap-3">
+          <a
+            href="https://github.com/nasimulhasan513"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className="text-ink-muted hover:text-ink transition-colors"
+          >
+            <Github className="h-5 w-5" />
           </a>
-          <a href="https://www.linkedin.com/in/nasimulhasandeep" target="_blank" rel="noopener noreferrer" 
-             className="text-slate-400 hover:text-white transition-colors">
-            <Linkedin className="w-5 h-5" />
+          <a
+            href="https://www.linkedin.com/in/nasimulhasandeep"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="text-ink-muted hover:text-ink transition-colors"
+          >
+            <Linkedin className="h-5 w-5" />
           </a>
-          <a href="mailto:contact@nasimulhasan.me" 
-             className="text-slate-400 hover:text-white transition-colors">
-            <Mail className="w-5 h-5" />
+          <a
+            href="https://www.facebook.com/nasimulhasandeep/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+            className="text-ink-muted hover:text-ink transition-colors"
+          >
+            <Facebook className="h-5 w-5" />
+          </a>
+          <a
+            href="https://www.instagram.com/nasimulhasandeep1/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="text-ink-muted hover:text-ink transition-colors"
+          >
+            <Instagram className="h-5 w-5" />
+          </a>
+          <a
+            href="mailto:contact@nasimulhasan.me"
+            aria-label="Email"
+            className="text-ink-muted hover:text-ink transition-colors"
+          >
+            <Mail className="h-5 w-5" />
           </a>
         </div>
-      </div>
-      <div className="container-padding mt-8 text-center md:text-left">
-        <p className="text-slate-600 text-xs">© {new Date().getFullYear()} Nasimul Hasan Deep. All rights reserved.</p>
       </div>
     </footer>
   );

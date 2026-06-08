@@ -1,87 +1,112 @@
-"use client";
+import { ExternalLink } from "lucide-react";
 
-import { motion } from 'framer-motion';
+type Experience = {
+  role: string;
+  company: string;
+  url?: string;
+  period: string;
+  current?: boolean;
+  summary: string;
+  points: string[];
+};
 
-const experiences = [
+const experiences: Experience[] = [
   {
-    role: 'Chief Technology Officer',
-    company: 'Rhombus Publications',
-    period: 'Sep 2024 - Present',
+    role: "Chief Technology Officer",
+    company: "Rhombus Publications",
+    url: "https://rhombuspublications.com/",
+    period: "Sep 2024 — Present",
+    current: true,
+    summary: "Leading all technology for an online bookstore and education brand.",
     points: [
-      'Designed and developed a complete e-commerce platform using Nuxt.js, Node.js, Flask, Prisma ORM, and MongoDB.',
-      'Built a full order management system with cart, checkout, payment gateway integration, and real-time status updates.',
-      'Integrated Paperfly API for automated logistics and tracking.',
-      'Developed sales analytics dashboards and automated reporting via SMS/Email.',
-      'Optimized database performance improving query response time by 40%.'
-    ]
+      "Built the full online store — from browsing books to checkout and delivery.",
+      "Set up automatic order tracking and SMS/email updates for customers.",
+      "Created sales dashboards so the team can see what's working at a glance.",
+      "Made the site noticeably faster by improving how data is stored and fetched.",
+    ],
   },
   {
-    role: 'Full-stack Developer',
-    company: 'ACS Future School',
-    period: 'Oct 2024 - Present',
+    role: "Lead Backend Engineer",
+    company: "ACS Future School",
+    url: "https://acsfutureschool.com/about-us",
+    period: "Oct 2024 — Present",
+    current: true,
+    summary: "Leading the behind-the-scenes systems of an online learning platform.",
     points: [
-      'Built scalable backend architecture using Node.js, Express.js, and PostgreSQL.',
-      'Implemented JWT-based role management for students, teachers, and admins.',
-      'Integrated real-time features with WebSocket for chat and notifications.',
-      'Automated recurring tasks using Google Apps Script and scheduled jobs.',
-      'Deployed backend on VPS with PM2 and CI/CD pipelines.'
-    ]
+      "Built the core systems for students, teachers, and admins to work together.",
+      "Added real-time chat and instant notifications.",
+      "Automated routine tasks like scheduling and reporting.",
+      "Kept the platform stable and online for thousands of daily users.",
+    ],
   },
   {
-    role: 'Technical Project Executive',
-    company: '10 Minute School',
-    period: 'Feb 2022 - Jul 2022',
+    role: "Technical Project Executive",
+    company: "10 Minute School",
+    period: "Feb 2022 — Jul 2022",
+    summary: "Supported product and workflow automation at Bangladesh's largest ed-tech.",
     points: [
-      'Developed Google Workspace automation tools to improve workflow.',
-      'Collaborated with cross-functional teams for feature rollout.',
-      'Supported web product development initiatives.'
-    ]
-  }
+      "Built tools that made everyday team workflows faster.",
+      "Worked across teams to help roll out new features.",
+    ],
+  },
 ];
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="py-24 relative">
-      <div className="container-padding">
-        <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">Experience</h2>
-        
-        <div className="max-w-4xl mx-auto space-y-12">
-          {experiences.map((job, index) => (
-            <motion.div 
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative pl-8 md:pl-0 md:grid md:grid-cols-9 gap-8 group"
+    <section id="experience" className="bg-white py-20 sm:py-28 scroll-mt-16 border-y border-slate-200">
+      <div className="container-px">
+        <div className="reveal-up max-w-3xl">
+          <span className="eyebrow">02 — Experience</span>
+          <h2 className="mt-4 text-3xl sm:text-4xl">Where I&apos;ve been working</h2>
+        </div>
+
+        <ol className="mt-12 space-y-6">
+          {experiences.map((job, i) => (
+            <li
+              key={`${job.role}-${job.company}`}
+              style={{ "--reveal-delay": `${i * 80}ms` } as React.CSSProperties}
+              className="reveal-up rounded-2xl border border-slate-200 p-6 sm:p-8 sm:grid sm:grid-cols-3 sm:gap-8"
             >
-              {/* Date (Left on Desktop) */}
-              <div className="md:col-span-4 md:text-right mb-2 md:mb-0">
-                <span className="text-primary-400 font-mono text-sm">{job.period}</span>
-                <h3 className="text-xl font-bold text-white mt-1">{job.role}</h3>
-                <p className="text-slate-400 text-sm">{job.company}</p>
+              <div className="sm:col-span-1">
+                <div className="flex items-center gap-2">
+                  {job.current && (
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-semibold text-green-700">
+                      <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+                      Current
+                    </span>
+                  )}
+                </div>
+                <h3 className="mt-2 text-xl">{job.role}</h3>
+                {job.url ? (
+                  <a
+                    href={job.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 inline-flex items-center gap-1.5 font-medium text-primary-600 hover:text-primary-700"
+                  >
+                    {job.company}
+                    <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                ) : (
+                  <p className="mt-1 font-medium text-ink-soft">{job.company}</p>
+                )}
+                <p className="mt-1 text-sm text-ink-muted">{job.period}</p>
               </div>
 
-              {/* Timeline Line */}
-              <div className="absolute left-0 top-0 bottom-0 w-px bg-slate-800 md:static md:w-auto md:bg-transparent md:col-span-1 md:flex md:justify-center md:relative">
-                <div className="hidden md:block absolute top-0 bottom-0 w-px bg-slate-800"></div>
-                <div className="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-primary-500 md:static md:mt-2.5 shadow-[0_0_10px_rgba(14,165,233,0.5)]"></div>
-              </div>
-
-              {/* Content (Right on Desktop) */}
-              <div className="md:col-span-4 glass-card p-6 rounded-xl relative z-10 group-hover:-translate-y-1 transition-transform duration-300">
-                <ul className="space-y-3">
-                  {job.points.map((point, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-300 text-sm">
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-500/50 shrink-0"></span>
-                      <span>{point}</span>
+              <div className="mt-5 sm:mt-0 sm:col-span-2">
+                <p className="font-medium text-ink">{job.summary}</p>
+                <ul className="mt-4 space-y-2.5">
+                  {job.points.map((p, i) => (
+                    <li key={i} className="flex gap-3 text-ink-soft">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-400" />
+                      <span className="leading-relaxed">{p}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-            </motion.div>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

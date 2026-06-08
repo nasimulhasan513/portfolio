@@ -1,39 +1,50 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Archivo, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
+import ScrollReveal from "@/components/ScrollReveal";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
+const archivo = Archivo({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-archivo",
+  display: "swap",
+});
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Nasimul Hasan Deep | Software Engineer",
-  description: "Portfolio of Nasimul Hasan Deep, a Software Engineer specializing in Full-stack Development, Cloud Computing, and AI Integration.",
-  keywords: ["Software Engineer", "Full-stack Developer", "Next.js", "React", "Node.js", "Cloud Computing", "AI", "Portfolio"],
+  metadataBase: new URL("https://nasimulhasandeep.com"),
+  title: "Nasimul Hasan Deep | Lead Backend Engineer & CTO",
+  description: "Nasimul Hasan Deep — Lead Backend Engineer at ACS Future School and CTO at Rhombus Publications. I build reliable, fast, and secure web systems.",
+  keywords: ["Nasimul Hasan Deep", "Backend Engineer", "CTO", "Node.js", "PostgreSQL", "AWS", "Software Engineer", "Portfolio"],
   authors: [{ name: "Nasimul Hasan Deep" }],
   creator: "Nasimul Hasan Deep",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://nasimulhasandeep.com",
-    title: "Nasimul Hasan Deep | Software Engineer",
-    description: "Building scalable and high-performance web applications.",
+    title: "Nasimul Hasan Deep | Lead Backend Engineer & CTO",
+    description: "I build reliable, fast, and secure web systems used by tens of thousands of people.",
     siteName: "Nasimul Hasan Deep Portfolio",
-    images: [
-      {
-        url: "https://media.licdn.com/dms/image/v2/D4D03AQGZgGVu66QKUg/profile-displayphoto-scale_400_400/B4DZmeOnHsJMAk-/0/1759296255883?e=1765411200&v=beta&t=gmbrY48q2ihobBKatVEgsLR9Oh6DpIqjGeN-QOYQGlw",
-        width: 400,
-        height: 400,
-        alt: "Nasimul Hasan Deep",
-      },
-    ],
+    images: [{ url: "/icon.png", width: 512, height: 512, alt: "Nasimul Hasan Deep" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Nasimul Hasan Deep | Software Engineer",
-    description: "Building scalable and high-performance web applications.",
-    images: ["https://media.licdn.com/dms/image/v2/D4D03AQGZgGVu66QKUg/profile-displayphoto-scale_400_400/B4DZmeOnHsJMAk-/0/1759296255883?e=1765411200&v=beta&t=gmbrY48q2ihobBKatVEgsLR9Oh6DpIqjGeN-QOYQGlw"],
+    card: "summary",
+    title: "Nasimul Hasan Deep | Lead Backend Engineer & CTO",
+    description: "I build reliable, fast, and secure web systems used by tens of thousands of people.",
+    images: ["/icon.png"],
   },
   icons: {
     icon: "/icon.png",
@@ -46,8 +57,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${outfit.variable} font-sans bg-slate-950 text-slate-200`}>
+    <html
+      lang="en"
+      className={`${archivo.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} scroll-smooth`}
+    >
+      <body className="font-sans bg-paper text-ink antialiased">
+        <ScrollReveal />
         <NavBar />
         {children}
         <Footer />

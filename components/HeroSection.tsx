@@ -1,127 +1,105 @@
-"use client";
-
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import dynamic from 'next/dynamic';
-
-const Background3D = dynamic(() => import('./Background3D'), { ssr: false });
+import Image from "next/image";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* 3D Background */}
-      <Background3D />
-
-      {/* Background Elements (Fallback/Overlay) */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <motion.div 
-          animate={{ 
-            y: [0, -20, 0],
-            opacity: [0.5, 0.8, 0.5]
-          }}
-          transition={{ 
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut" 
-          }}
-          className="absolute top-20 left-20 w-72 h-72 bg-primary-500/20 rounded-full blur-[100px]"
-        />
-        <motion.div 
-          animate={{ 
-            y: [0, 30, 0],
-            opacity: [0.3, 0.6, 0.3]
-          }}
-          transition={{ 
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-          className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-[100px]"
-        />
+    <section className="relative overflow-hidden pt-24 pb-16 sm:pt-28 sm:pb-24">
+      {/* Masthead rule */}
+      <div className="container-px">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-3 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ink-muted">
+          <span>Nasimul Hasan Deep</span>
+          <span className="hidden sm:inline">Backend Engineer / CTO</span>
+        </div>
       </div>
 
-      <div className="container-padding relative z-10 grid md:grid-cols-2 gap-12 items-center">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="order-2 md:order-1"
-        >
-          <div className="inline-block px-3 py-1 mb-4 text-xs font-medium tracking-wider text-primary-400 uppercase bg-primary-500/10 rounded-full border border-primary-500/20">
-            Available for hire
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            Building <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-purple-400">Scalable</span> Digital Systems
+      <div className="container-px relative mt-10 grid items-center gap-10 lg:mt-14 lg:grid-cols-12 lg:gap-12">
+        {/* Text */}
+        <div className="reveal lg:col-span-7">
+          <h1 className="font-display text-[2.6rem] leading-[1.04] font-extrabold tracking-tight text-ink sm:text-6xl lg:text-[4.2rem]">
+            I build the systems
+            <br />
+            behind the apps
+            <br />
+            <span className="text-primary-600">people use every day.</span>
           </h1>
-          <p className="text-slate-400 text-lg md:text-xl mb-8 max-w-lg leading-relaxed">
-            I'm Nasimul Hasan Deep, a Software Engineer specializing in Node.js, PostgreSQL, and AWS Cloud. I build high-performance backend systems that power impactful products.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <a href="#projects" className="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-lg transition-all shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40">
-              View Work
-            </a>
-            <a href="#contact" className="px-8 py-3 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-lg transition-all border border-slate-700">
-              Contact Me
-            </a>
-          </div>
-          
-          <div className="mt-12 flex items-center gap-6 text-slate-400">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm">Open to collaborations</span>
-            </div>
-          </div>
-        </motion.div>
 
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="order-1 md:order-2 flex justify-center relative"
-        >
-          <div className="relative w-64 h-64 md:w-80 md:h-80">
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary-500 to-purple-500 rounded-full opacity-20 blur-2xl animate-pulse"></div>
-            <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-slate-800/50 shadow-2xl">
-              <Image 
-                src="https://media.licdn.com/dms/image/v2/D4D03AQGZgGVu66QKUg/profile-displayphoto-scale_400_400/B4DZmeOnHsJMAk-/0/1759296255883?e=1765411200&v=beta&t=gmbrY48q2ihobBKatVEgsLR9Oh6DpIqjGeN-QOYQGlw" 
-                alt="Nasimul Hasan Deep"
-                fill
-                className="object-cover"
+          <p className="mt-7 max-w-md text-lg leading-relaxed text-ink-soft">
+            I&apos;m Nasimul — a backend engineer and CTO. In plain terms: I make
+            websites and apps run smoothly, safely, and fast, even when thousands of
+            people use them at once.
+          </p>
+
+          {/* Roles */}
+          <div className="mt-8 grid max-w-md gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-2">
+            <a
+              href="https://acsfutureschool.com/about-us"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between bg-white p-4 transition-colors hover:bg-slate-50"
+            >
+              <span>
+                <span className="block font-mono text-[0.7rem] uppercase tracking-widest text-ink-muted">
+                  Lead Backend Eng.
+                </span>
+                <span className="mt-0.5 block font-semibold text-ink">ACS Future School</span>
+              </span>
+              <ArrowUpRight className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+            <a
+              href="https://rhombuspublications.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between bg-white p-4 transition-colors hover:bg-slate-50"
+            >
+              <span>
+                <span className="block font-mono text-[0.7rem] uppercase tracking-widest text-ink-muted">
+                  CTO
+                </span>
+                <span className="mt-0.5 block font-semibold text-ink">Rhombus Publications</span>
+              </span>
+              <ArrowUpRight className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+          </div>
+
+          {/* CTAs */}
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <a
+              href="#projects"
+              className="inline-flex items-center gap-2 rounded-full bg-primary-600 px-6 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-primary-700"
+            >
+              See my work
+              <ArrowRight className="h-4 w-4" />
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3 font-semibold text-ink transition-colors hover:border-ink"
+            >
+              Contact me
+            </a>
+          </div>
+        </div>
+
+        {/* Portrait */}
+        <div className="reveal lg:col-span-5">
+          <figure className="relative mx-auto max-w-sm lg:max-w-none">
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-sm">
+              <Image
+                src="/images/hero-portrait.jpg"
+                alt="Nasimul Hasan Deep working on a laptop at a café"
+                width={787}
+                height={1400}
                 priority
+                sizes="(max-width: 1024px) 24rem, 40vw"
+                className="h-full w-full object-cover"
               />
             </div>
-            
-            {/* Floating Tech Icons (Decorative) */}
-            <motion.div 
-              animate={{ y: [-10, 10, -10] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-4 -right-4 p-3 bg-slate-900 rounded-xl border border-slate-800 shadow-xl"
-            >
-              <span className="text-2xl">🚀</span>
-            </motion.div>
-            <motion.div 
-              animate={{ y: [10, -10, 10] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute -bottom-4 -left-4 p-3 bg-slate-900 rounded-xl border border-slate-800 shadow-xl"
-            >
-              <span className="text-2xl">⚡</span>
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 10, 0] }}
-        transition={{ delay: 1, duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-slate-500"
-      >
-        <div className="w-6 h-10 border-2 border-slate-500 rounded-full flex justify-center p-1">
-          <div className="w-1 h-2 bg-slate-500 rounded-full" />
+            <figcaption className="mt-3 flex items-center justify-between font-mono text-[0.7rem] uppercase tracking-[0.18em] text-ink-muted">
+              <span>Fig. 01 — On the job</span>
+              <span>Dhaka</span>
+            </figcaption>
+          </figure>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
