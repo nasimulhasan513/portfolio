@@ -1,4 +1,5 @@
-import { ExternalLink } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import FadeIn from "./ui/FadeIn";
 
 type Experience = {
   role: string;
@@ -53,58 +54,67 @@ const experiences: Experience[] = [
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="bg-white py-20 sm:py-28 scroll-mt-16 border-y border-slate-200">
+    <section id="experience" className="scroll-mt-24 bg-base py-24 sm:py-32">
       <div className="container-px">
-        <div className="reveal-up max-w-3xl">
-          <span className="eyebrow">02 — Experience</span>
-          <h2 className="mt-4 text-3xl sm:text-4xl">Where I&apos;ve been working</h2>
+        <div className="max-w-3xl">
+          <FadeIn as="span" className="eyebrow">
+            Experience
+          </FadeIn>
+          <FadeIn
+            as="h2"
+            delay={0.05}
+            className="mt-5 text-[clamp(2.5rem,8vw,6rem)] font-black uppercase leading-[0.95] tracking-tight"
+          >
+            Where i&apos;ve <span className="brand-text">worked</span>
+          </FadeIn>
         </div>
 
-        <ol className="mt-12 space-y-6">
+        <ol className="mt-14 border-t border-line">
           {experiences.map((job, i) => (
-            <li
+            <FadeIn
+              as="li"
               key={`${job.role}-${job.company}`}
-              style={{ "--reveal-delay": `${i * 80}ms` } as React.CSSProperties}
-              className="reveal-up rounded-2xl border border-slate-200 p-6 sm:p-8 sm:grid sm:grid-cols-3 sm:gap-8"
+              delay={i * 0.08}
+              className="grid gap-6 border-b border-line py-8 sm:grid-cols-3 sm:gap-10 sm:py-12"
             >
-              <div className="sm:col-span-1">
-                <div className="flex items-center gap-2">
-                  {job.current && (
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-semibold text-green-700">
-                      <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                      Current
-                    </span>
-                  )}
-                </div>
-                <h3 className="mt-2 text-xl">{job.role}</h3>
+              <div>
+                {job.current && (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-base-elev px-2.5 py-0.5 text-xs font-medium text-ink-soft">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+                    Current
+                  </span>
+                )}
+                <h3 className="mt-3 text-2xl font-semibold text-ink">{job.role}</h3>
                 {job.url ? (
                   <a
                     href={job.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-1 inline-flex items-center gap-1.5 font-medium text-primary-600 hover:text-primary-700"
+                    className="group mt-1 inline-flex items-center gap-1.5 font-medium text-ink-soft transition-colors hover:text-ink"
                   >
                     {job.company}
-                    <ExternalLink className="h-3.5 w-3.5" />
+                    <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </a>
                 ) : (
                   <p className="mt-1 font-medium text-ink-soft">{job.company}</p>
                 )}
-                <p className="mt-1 text-sm text-ink-muted">{job.period}</p>
+                <p className="mt-1 font-mono text-xs uppercase tracking-widest text-ink-muted">
+                  {job.period}
+                </p>
               </div>
 
-              <div className="mt-5 sm:mt-0 sm:col-span-2">
-                <p className="font-medium text-ink">{job.summary}</p>
-                <ul className="mt-4 space-y-2.5">
-                  {job.points.map((p, i) => (
-                    <li key={i} className="flex gap-3 text-ink-soft">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-400" />
+              <div className="sm:col-span-2">
+                <p className="text-lg font-medium text-ink">{job.summary}</p>
+                <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
+                  {job.points.map((p, j) => (
+                    <li key={j} className="flex gap-3 text-ink-soft">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-grad-2" />
                       <span className="leading-relaxed">{p}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-            </li>
+            </FadeIn>
           ))}
         </ol>
       </div>

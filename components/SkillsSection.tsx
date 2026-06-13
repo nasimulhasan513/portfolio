@@ -6,6 +6,7 @@ import {
   Boxes,
   type LucideIcon,
 } from "lucide-react";
+import FadeIn from "./ui/FadeIn";
 
 type Skill =
   | { name: string; slug: string; color: string }
@@ -78,13 +79,13 @@ const categories: Category[] = [
 
 function Chip({ skill }: { skill: Skill }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-sm font-medium text-ink-soft transition-colors hover:border-primary-300 hover:bg-slate-50">
+    <span className="inline-flex items-center gap-2 rounded-xl border border-line bg-base-elev px-3 py-2 text-sm font-medium text-ink-soft transition-colors hover:border-[#D7E2EA]/40 hover:text-ink">
       {"slug" in skill ? (
         <span
           aria-hidden
           className="h-[18px] w-[18px] shrink-0 bg-no-repeat"
           style={{
-            backgroundColor: skill.color,
+            backgroundColor: "#D7E2EA",
             WebkitMaskImage: `url(/tech/${skill.slug}.svg)`,
             maskImage: `url(/tech/${skill.slug}.svg)`,
             WebkitMaskRepeat: "no-repeat",
@@ -96,7 +97,7 @@ function Chip({ skill }: { skill: Skill }) {
           }}
         />
       ) : (
-        <skill.icon className="h-[18px] w-[18px] shrink-0 text-slate-400" strokeWidth={2} />
+        <skill.icon className="h-[18px] w-[18px] shrink-0 text-ink-muted" strokeWidth={2} />
       )}
       {skill.name}
     </span>
@@ -105,29 +106,37 @@ function Chip({ skill }: { skill: Skill }) {
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="py-20 sm:py-28 scroll-mt-16">
+    <section id="skills" className="scroll-mt-24 bg-base py-24 sm:py-32">
       <div className="container-px">
-        <div className="reveal-up max-w-3xl">
-          <span className="eyebrow">03 — Skills</span>
-          <h2 className="mt-4 text-3xl sm:text-4xl">My toolkit</h2>
-          <p className="mt-4 text-lg text-ink-soft">
-            The main technologies I use to design, build, and ship reliable products.
-          </p>
+        <div className="max-w-3xl">
+          <FadeIn as="span" className="eyebrow">
+            Toolkit
+          </FadeIn>
+          <FadeIn
+            as="h2"
+            delay={0.05}
+            className="mt-5 text-[clamp(2.5rem,8vw,6rem)] font-black uppercase leading-[0.95] tracking-tight"
+          >
+            What i build <span className="brand-text">with</span>
+          </FadeIn>
         </div>
 
-        <div className="reveal-up card mt-10 divide-y divide-slate-100">
-          {categories.map((cat) => (
-            <div
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {categories.map((cat, i) => (
+            <FadeIn
               key={cat.title}
-              className="grid gap-3 p-5 sm:grid-cols-[180px_1fr] sm:gap-6 sm:p-6"
+              delay={(i % 2) * 0.08}
+              className="rounded-3xl border border-line bg-base-soft p-6"
             >
-              <h3 className="text-base font-semibold text-ink sm:pt-1.5">{cat.title}</h3>
+              <h3 className="mb-4 font-mono text-xs uppercase tracking-widest text-ink-muted">
+                {cat.title}
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {cat.items.map((s) => (
                   <Chip key={s.name} skill={s} />
                 ))}
               </div>
-            </div>
+            </FadeIn>
           ))}
         </div>
       </div>

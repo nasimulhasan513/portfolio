@@ -11,7 +11,6 @@ const navItems = [
   { name: "Skills", href: "#skills" },
   { name: "Projects", href: "#projects" },
   { name: "Gallery", href: "#gallery" },
-  { name: "Contact", href: "#contact" },
 ];
 
 export default function NavBar() {
@@ -30,38 +29,44 @@ export default function NavBar() {
       className={twMerge(
         "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
         isScrolled
-          ? "bg-paper/85 backdrop-blur-md border-b border-slate-200"
-          : "bg-transparent border-b border-transparent"
+          ? "border-b border-line bg-base/80 backdrop-blur-md"
+          : "border-b border-transparent bg-transparent"
       )}
     >
-      <nav className="container-px flex h-16 items-center justify-between">
+      <nav className="container-px flex h-16 items-center justify-between md:h-20">
         <Link
           href="/"
-          className="font-display text-lg font-extrabold tracking-tight text-ink"
+          className="font-display text-xl font-black uppercase tracking-tight text-ink"
         >
-          Deep<span className="text-primary-600">.</span>
+          Deep<span className="brand-text">.</span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => (
             <a
               key={item.name}
               href={item.href}
-              className="text-sm font-medium text-ink-soft hover:text-primary-600 transition-colors"
+              className="text-sm font-medium uppercase tracking-wider text-ink-soft transition-opacity duration-200 hover:opacity-70"
             >
               {item.name}
             </a>
           ))}
           <a
             href="#contact"
-            className="rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white hover:bg-primary-700 transition-colors"
+            className="rounded-full px-5 py-2 text-sm font-medium uppercase tracking-wider text-white"
+            style={{
+              background:
+                "linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)",
+              outline: "2px solid #fff",
+              outlineOffset: "-3px",
+            }}
           >
-            Get in touch
+            Contact
           </a>
         </div>
 
         <button
-          className="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-lg text-ink hover:bg-slate-100"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-ink hover:bg-base-elev md:hidden"
           onClick={() => setIsMenuOpen((v) => !v)}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMenuOpen}
@@ -71,14 +76,14 @@ export default function NavBar() {
       </nav>
 
       {isMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-paper">
+        <div className="border-t border-line bg-base md:hidden">
           <div className="container-px flex flex-col py-2">
-            {navItems.map((item) => (
+            {[...navItems, { name: "Contact", href: "#contact" }].map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="py-3 text-base font-medium text-ink-soft hover:text-primary-600"
+                className="py-3 text-base font-medium uppercase tracking-wider text-ink-soft hover:text-ink"
               >
                 {item.name}
               </a>

@@ -1,178 +1,166 @@
-import { ExternalLink } from "lucide-react";
+"use client";
+
+import { useRef } from "react";
+import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import FadeIn from "./ui/FadeIn";
+import LiveProjectButton from "./ui/LiveProjectButton";
 
 type Project = {
   name: string;
   logo: string;
   url: string;
-  role?: string;
+  category: string;
   blurb: string;
-  platform?: string;
-  featured?: boolean;
+  gradient: string;
 };
 
-const projects: Project[] = [
+const featured: Project[] = [
   {
     name: "ACS Future School",
     logo: "/projects/acsfutureschool-logo.png",
     url: "https://acsfutureschool.com/",
-    role: "Lead Backend Engineer",
+    category: "Lead Backend Engineer",
     blurb:
-      "Bangladesh's leading online school — live classes, quizzes, and exam prep for classes 6–10 and admission tests.",
-    featured: true,
+      "Bangladesh's leading online school — live classes, quizzes, and exam prep for classes 6–10 and admission tests, stable for thousands of daily users.",
+    gradient: "radial-gradient(circle at 30% 30%, #7621B0 0%, #18011F 70%)",
   },
   {
     name: "Rhombus Publications",
     logo: "/projects/rhombuspublications-logo.svg",
     url: "https://rhombuspublications.com/",
-    role: "Chief Technology Officer",
+    category: "Chief Technology Officer",
     blurb:
-      "An online store for HSC academic and admission books, with ordering, payments, and delivery tracking.",
-    featured: true,
+      "An online store for HSC academic and admission books — full ordering, payments, and delivery tracking, with automated SMS/email updates.",
+    gradient: "radial-gradient(circle at 70% 30%, #B600A8 0%, #18011F 70%)",
   },
   {
     name: "Rhombus Publications App",
     logo: "/projects/rhombusapp-logo.png",
     url: "https://play.google.com/store/apps/details?id=com.education.rhombus",
-    role: "Chief Technology Officer",
-    platform: "Android · Google Play",
+    category: "Android · Google Play",
     blurb:
-      "The Rhombus mobile app — HSC and admission study materials in students' pockets.",
-    featured: true,
-  },
-  {
-    name: "ACS Porikkha",
-    logo: "/projects/acsporikkha-logo.png",
-    url: "https://acsporikkha.com/",
-    blurb:
-      "An MCQ exam-prep platform for SSC, HSC, admission, and job-test preparation.",
-  },
-  {
-    name: "ACS Engineering School",
-    logo: "/projects/acsengineeringschool-logo.png",
-    url: "https://acsengineeringschool.com/",
-    blurb: "An online school focused on training tomorrow's engineers.",
-  },
-  {
-    name: "Rhombus Parallel",
-    logo: "/projects/rhombusparallel-logo.png",
-    url: "https://rhombusparallel.com/",
-    blurb: "A focused online learning hub for HSC Higher Math.",
-  },
-  {
-    name: "SlackaHead",
-    logo: "/projects/slackahead-logo.png",
-    url: "https://slackahead.com/",
-    blurb:
-      "An ed-tech platform for GRE, GMAT, SAT, TOEFL, IELTS, and PTE preparation.",
-  },
-  {
-    name: "ACS Mart",
-    logo: "/projects/acsmart-logo.png",
-    url: "https://acsmart.bd/",
-    blurb:
-      "A marketplace where young student entrepreneurs run real shops and serve buyers.",
-  },
-  {
-    name: "Kidzora",
-    logo: "/projects/kidzora-logo.png",
-    url: "https://kidzora.com/",
-    blurb: "A playful learning and activity platform built for children.",
-  },
-  {
-    name: "Vinnoora",
-    logo: "/projects/vinnoora-logo.png",
-    url: "https://vinnoora.com/",
-    blurb: "A premium South Asian fashion and lifestyle brand store.",
+      "The Rhombus mobile app — HSC and admission study materials in students' pockets, backed by the same reliable systems.",
+    gradient: "radial-gradient(circle at 50% 30%, #BE4C00 0%, #18011F 70%)",
   },
 ];
 
-function ProjectCard({ p }: { p: Project }) {
-  return (
-    <a
-      href={p.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all hover:-translate-y-0.5 hover:border-primary-300 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
-    >
-      {/* Logo band */}
-      <div className="flex h-28 items-center justify-center border-b border-slate-100 bg-slate-50 px-6">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={p.logo}
-          alt={`${p.name} logo`}
-          loading="lazy"
-          className="max-h-12 w-auto max-w-[70%] object-contain"
-        />
-      </div>
+const supporting = [
+  { name: "ACS Porikkha", logo: "/projects/acsporikkha-logo.png", url: "https://acsporikkha.com/", blurb: "An MCQ exam-prep platform for SSC, HSC, admission, and job-test preparation." },
+  { name: "ACS Engineering School", logo: "/projects/acsengineeringschool-logo.png", url: "https://acsengineeringschool.com/", blurb: "An online school focused on training tomorrow's engineers." },
+  { name: "Rhombus Parallel", logo: "/projects/rhombusparallel-logo.png", url: "https://rhombusparallel.com/", blurb: "A focused online learning hub for HSC Higher Math." },
+  { name: "SlackaHead", logo: "/projects/slackahead-logo.png", url: "https://slackahead.com/", blurb: "An ed-tech platform for GRE, GMAT, SAT, TOEFL, IELTS, and PTE preparation." },
+  { name: "ACS Mart", logo: "/projects/acsmart-logo.png", url: "https://acsmart.bd/", blurb: "A marketplace where young student entrepreneurs run real shops and serve buyers." },
+  { name: "Kidzora", logo: "/projects/kidzora-logo.png", url: "https://kidzora.com/", blurb: "A playful learning and activity platform built for children." },
+  { name: "Vinnoora", logo: "/projects/vinnoora-logo.png", url: "https://vinnoora.com/", blurb: "A premium South Asian fashion and lifestyle brand store." },
+];
 
-      {/* Body */}
-      <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-start justify-between gap-3">
-          <h3 className="text-lg leading-snug">{p.name}</h3>
-          <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-ink-muted transition-colors group-hover:text-primary-600" />
+function StackingCard({ project, index, total }: { project: Project; index: number; total: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "start start"],
+  });
+  const targetScale = 1 - (total - 1 - index) * 0.04;
+  const scale = useTransform(scrollYProgress, [0, 1], [1, targetScale]);
+
+  return (
+    <div ref={ref} className="sticky top-24 flex justify-center md:top-32">
+      <motion.article
+        style={{ scale, top: `${index * 28}px` }}
+        className="relative w-full origin-top overflow-hidden rounded-[40px] border-2 border-[#D7E2EA] bg-base p-5 sm:rounded-[50px] sm:p-7 md:rounded-[60px] md:p-9"
+      >
+        {/* top row */}
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <span className="text-[clamp(2.5rem,8vw,110px)] font-black leading-none text-ink">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <div>
+              <span className="font-mono text-[0.7rem] uppercase tracking-widest text-ink-muted">
+                {project.category}
+              </span>
+              <h3 className="text-2xl font-semibold text-ink sm:text-3xl md:text-4xl">
+                {project.name}
+              </h3>
+            </div>
+          </div>
+          <LiveProjectButton href={project.url} />
         </div>
 
-        {(p.role || p.platform) && (
-          <div className="mt-1.5 flex flex-wrap items-center gap-2">
-            {p.role && (
-              <span className="rounded-full bg-primary-50 px-2.5 py-0.5 text-xs font-semibold text-primary-700">
-                {p.role}
-              </span>
-            )}
-            {p.platform && (
-              <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-ink-muted">
-                {p.platform}
-              </span>
-            )}
+        {/* body */}
+        <div className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-5">
+          <p className="self-end text-base font-light leading-relaxed text-ink-soft sm:col-span-2 sm:text-lg">
+            {project.blurb}
+          </p>
+          <div
+            className="relative flex aspect-[16/10] items-center justify-center overflow-hidden rounded-[28px] sm:col-span-3 sm:rounded-[40px]"
+            style={{ background: project.gradient }}
+          >
+            <div className="relative h-20 w-44 sm:h-28 sm:w-64">
+              <Image src={project.logo} alt={project.name} fill className="object-contain drop-shadow-2xl" />
+            </div>
           </div>
-        )}
-
-        <p className="mt-3 text-sm leading-relaxed text-ink-soft">{p.blurb}</p>
-      </div>
-    </a>
+        </div>
+      </motion.article>
+    </div>
   );
 }
 
 export default function ProjectsSection() {
-  const featured = projects.filter((p) => p.featured);
-  const more = projects.filter((p) => !p.featured);
-
   return (
     <section
       id="projects"
-      className="bg-white py-20 sm:py-28 scroll-mt-16 border-y border-slate-200"
+      className="relative z-10 -mt-10 rounded-t-[40px] bg-base px-5 pb-24 pt-20 sm:-mt-12 sm:rounded-t-[50px] sm:px-8 sm:pt-24 md:-mt-14 md:rounded-t-[60px] md:px-10 md:pt-28"
     >
-      <div className="container-px">
-        <div className="reveal-up max-w-3xl">
-          <span className="eyebrow">04 — Projects</span>
-          <h2 className="mt-4 text-3xl sm:text-4xl">Platforms I&apos;ve been associated with</h2>
-          <p className="mt-4 text-lg text-ink-soft">
-            From learning platforms to online stores — real products that people use
-            every day. Tap any card to visit it.
-          </p>
+      <div className="mx-auto max-w-[1400px]">
+        <div className="max-w-3xl">
+          <FadeIn as="span" className="eyebrow">
+            Selected work
+          </FadeIn>
+          <FadeIn
+            as="h2"
+            delay={0.05}
+            className="hero-heading mt-5 text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight"
+          >
+            Projects
+          </FadeIn>
         </div>
 
-        {/* Featured (current roles) */}
-        <div className="reveal-up mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((p) => (
-            <ProjectCard key={p.url} p={p} />
+        {/* Sticky-stacking featured cards */}
+        <div className="mt-12 flex flex-col gap-6">
+          {featured.map((p, i) => (
+            <StackingCard key={p.name} project={p} index={i} total={featured.length} />
           ))}
         </div>
 
-        {/* Tech support / consulting */}
-        <div className="reveal-up mt-16 mb-6 max-w-3xl">
-          <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-ink-muted">
-            Organizations I&apos;ve supported
-          </h3>
-          <p className="mt-2 text-ink-soft">
-            Teams I&apos;ve helped behind the scenes — building their websites, backend,
-            and architecture so their products run reliably.
-          </p>
-        </div>
-        <div className="reveal-up grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {more.map((p) => (
-            <ProjectCard key={p.url} p={p} />
-          ))}
+        {/* Supporting grid */}
+        <div className="mt-24">
+          <FadeIn as="h3" className="mb-8 font-mono text-sm uppercase tracking-widest text-ink-muted">
+            More products i&apos;ve built
+          </FadeIn>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {supporting.map((p, i) => (
+              <FadeIn key={p.name} delay={(i % 3) * 0.08}>
+                <a
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex h-full flex-col rounded-3xl border border-line bg-base-soft p-6 transition-colors hover:border-[#D7E2EA]/40 hover:bg-base-elev"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="relative h-10 w-28">
+                      <Image src={p.logo} alt={p.name} fill className="object-contain object-left" />
+                    </div>
+                    <ArrowUpRight className="h-5 w-5 text-ink-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink" />
+                  </div>
+                  <h4 className="mt-5 text-lg font-semibold text-ink">{p.name}</h4>
+                  <p className="mt-2 text-sm font-light leading-relaxed text-ink-soft">{p.blurb}</p>
+                </a>
+              </FadeIn>
+            ))}
+          </div>
         </div>
       </div>
     </section>

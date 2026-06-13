@@ -2,10 +2,12 @@ import { Github, Linkedin, Facebook, Instagram, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-paper border-t border-slate-200 py-10">
+    <footer className="border-t border-line bg-base py-10">
       <div className="container-px flex flex-col items-center justify-between gap-6 sm:flex-row">
         <div className="text-center sm:text-left">
-          <p className="font-display text-lg font-bold text-ink">Nasimul Hasan Deep</p>
+          <p className="font-display text-lg font-bold uppercase tracking-tight text-ink">
+            Nasimul Hasan Deep
+          </p>
           <p className="text-sm text-ink-muted">
             © {new Date().getFullYear()} · Built and designed by me.
           </p>

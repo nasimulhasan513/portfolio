@@ -43,7 +43,7 @@ export default function GalleryGrid({ photos }: { photos: Photo[] }) {
             key={photo.src}
             type="button"
             onClick={() => setActive(i)}
-            className="group mb-4 block w-full overflow-hidden rounded-xl bg-slate-100 break-inside-avoid focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
+            className="group mb-4 block w-full overflow-hidden rounded-xl bg-base-elev break-inside-avoid focus:outline-none focus-visible:ring-2 focus-visible:ring-grad-2 focus-visible:ring-offset-2 focus-visible:ring-offset-base"
             aria-label={`Open photo ${i + 1}`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}

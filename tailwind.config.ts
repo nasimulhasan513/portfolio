@@ -9,40 +9,27 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "#F8FAFC",
+        base: {
+          DEFAULT: "#0C0C0C",
+          soft: "#131313",
+          elev: "#1A1A1A",
+        },
         ink: {
-          DEFAULT: "#1E293B",
-          soft: "#475569",
-          muted: "#64748B",
+          DEFAULT: "#D7E2EA",
+          soft: "#AAB6C0",
+          muted: "#646973",
         },
-        // Espresso / coffee accent scale (primary brand)
-        primary: {
-          50: "#faf6f2",
-          100: "#f1e7dd",
-          200: "#e2cdb9",
-          300: "#cfae92",
-          400: "#b58c6b",
-          500: "#97694a",
-          600: "#75543b",
-          700: "#5e4330",
-          800: "#4a3526",
-          900: "#3b2a1f",
+        grad: {
+          1: "#18011F",
+          2: "#B600A8",
+          3: "#7621B0",
+          4: "#BE4C00",
         },
-        warm: "#F97316",
       },
       fontFamily: {
         sans: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
-        display: ["var(--font-archivo)", "system-ui", "sans-serif"],
+        display: ["var(--font-kanit)", "system-ui", "sans-serif"],
         mono: ["var(--font-jetbrains-mono)", "ui-monospace", "monospace"],
-      },
-      animation: {
-        "fade-up": "fadeUp 0.6s ease-out both",
-      },
-      keyframes: {
-        fadeUp: {
-          "0%": { transform: "translateY(16px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
-        },
       },
     },
   },

@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Archivo, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Kanit, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import ScrollReveal from "@/components/ScrollReveal";
 
-const archivo = Archivo({
+const kanit = Kanit({
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-archivo",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-kanit",
   display: "swap",
 });
 const spaceGrotesk = Space_Grotesk({
@@ -59,12 +58,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} scroll-smooth`}
+      className={`${kanit.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} scroll-smooth`}
     >
-      <body className="font-sans bg-paper text-ink antialiased">
-        <ScrollReveal />
+      <body className="bg-base text-ink antialiased">
         <NavBar />
-        {children}
+        <main style={{ overflowX: "clip" }}>{children}</main>
         <Footer />
       </body>
     </html>

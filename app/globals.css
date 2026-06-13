@@ -3,35 +3,45 @@
 
 @theme {
   --font-sans: var(--font-space-grotesk);
-  --font-display: var(--font-archivo);
+  --font-display: var(--font-kanit);
   --font-mono: var(--font-jetbrains-mono);
 
-  --color-paper: #f8fafc;
-  --color-ink: #1e293b;
-  --color-ink-soft: #475569;
-  --color-ink-muted: #64748b;
+  /* Dark cinematic palette */
+  --color-base: #0c0c0c;
+  --color-base-soft: #131313;
+  --color-base-elev: #1a1a1a;
 
-  --color-primary-50: #faf6f2;
-  --color-primary-100: #f1e7dd;
-  --color-primary-200: #e2cdb9;
-  --color-primary-300: #cfae92;
-  --color-primary-400: #b58c6b;
-  --color-primary-500: #97694a;
-  --color-primary-600: #75543b;
-  --color-primary-700: #5e4330;
-  --color-primary-800: #4a3526;
-  --color-primary-900: #3b2a1f;
+  --color-ink: #d7e2ea;
+  --color-ink-soft: #aab6c0;
+  --color-ink-muted: #646973;
 
-  --color-warm: #f97316;
+  /* Brand gradient stops (button + accents) */
+  --color-grad-1: #18011f;
+  --color-grad-2: #b600a8;
+  --color-grad-3: #7621b0;
+  --color-grad-4: #be4c00;
+
+  --color-line: rgba(215, 226, 234, 0.12);
 }
 
 @layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   html {
     scroll-behavior: smooth;
+    background: #0c0c0c;
   }
 
   body {
-    @apply bg-paper text-ink antialiased;
+    margin: 0;
+    background: #0c0c0c;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
@@ -41,11 +51,13 @@
   h4,
   h5,
   h6 {
-    @apply font-display font-bold text-ink tracking-tight;
+    font-family: var(--font-display), system-ui, sans-serif;
+    letter-spacing: -0.01em;
   }
 
   ::selection {
-    @apply bg-primary-600/15 text-primary-700;
+    background: rgba(182, 0, 168, 0.35);
+    color: #fff;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -61,61 +73,43 @@
 }
 
 @layer components {
-  /* Consistent page gutters + max width */
   .container-px {
-    @apply px-5 sm:px-8 lg:px-12 max-w-6xl mx-auto;
+    @apply px-5 sm:px-8 md:px-10 max-w-[1400px] mx-auto;
   }
 
-  .container-narrow {
-    @apply px-5 sm:px-8 max-w-3xl mx-auto;
+  /* Cool steel gradient text — used for big display headings */
+  .hero-heading {
+    background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 
-  /* Clean white card */
-  .card {
-    @apply bg-white border border-slate-200/80 rounded-2xl shadow-sm;
+  /* Vivid brand gradient text — used for accents */
+  .brand-text {
+    background: linear-gradient(123deg, #b600a8 10%, #7621b0 55%, #be4c00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 
-  /* Technical mono eyebrow with an index marker */
   .eyebrow {
-    @apply inline-flex items-center gap-2 font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary-600;
+    @apply inline-flex items-center gap-2 font-mono text-[0.7rem] font-medium uppercase tracking-[0.28em] text-ink-muted;
   }
 
   .eyebrow::before {
     content: "";
-    @apply h-px w-6 bg-primary-600/50;
-  }
-
-  /* Big editorial section index, e.g. 01 / 02 */
-  .section-index {
-    @apply font-mono text-sm text-ink-muted;
-  }
-
-  /* Hero/initial fade */
-  .reveal {
-    @apply animate-fade-up;
+    @apply h-px w-7 bg-ink-muted/60;
   }
 }
 
-/* --- Scroll reveal (whisper motion) --- */
-.js-reveal .reveal-up {
-  opacity: 0;
-  transform: translateY(14px);
-  transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
+/* Hide scrollbar for marquee rows */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
-
-.js-reveal .reveal-up.is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .js-reveal .reveal-up {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
