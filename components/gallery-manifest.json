@@ -228,12 +228,6 @@
     "h": 646
   },
   {
-    "src": "/gallery/web/20260110_011145.jpg",
-    "alt": "Photo from Nasimul's collection",
-    "w": 1400,
-    "h": 646
-  },
-  {
     "src": "/gallery/web/20260110_173905.jpg",
     "alt": "Photo from Nasimul's collection",
     "w": 646,
@@ -276,24 +270,6 @@
     "h": 1400
   },
   {
-    "src": "/gallery/web/20260124_163852.jpg",
-    "alt": "Photo from Nasimul's collection",
-    "w": 646,
-    "h": 1400
-  },
-  {
-    "src": "/gallery/web/20260124_164155.jpg",
-    "alt": "Photo from Nasimul's collection",
-    "w": 646,
-    "h": 1400
-  },
-  {
-    "src": "/gallery/web/20260124_164236.jpg",
-    "alt": "Photo from Nasimul's collection",
-    "w": 646,
-    "h": 1400
-  },
-  {
     "src": "/gallery/web/20260124_164328.jpg",
     "alt": "Photo from Nasimul's collection",
     "w": 646,
@@ -315,6 +291,36 @@
     "src": "/gallery/web/20260330_153626.jpg",
     "alt": "Photo from Nasimul's collection",
     "w": 646,
+    "h": 1400
+  },
+  {
+    "src": "/gallery/web/IMG_0354.jpg",
+    "alt": "Img 0354",
+    "w": 1050,
+    "h": 1400
+  },
+  {
+    "src": "/gallery/web/IMG_0357.jpg",
+    "alt": "Img 0357",
+    "w": 1050,
+    "h": 1400
+  },
+  {
+    "src": "/gallery/web/IMG_0363.jpg",
+    "alt": "Img 0363",
+    "w": 1050,
+    "h": 1400
+  },
+  {
+    "src": "/gallery/web/IMG_0370.jpg",
+    "alt": "Img 0370",
+    "w": 1050,
+    "h": 1400
+  },
+  {
+    "src": "/gallery/web/IMG_0373.jpg",
+    "alt": "Img 0373",
+    "w": 1050,
     "h": 1400
   },
   {
@@ -350,12 +356,6 @@
   {
     "src": "/gallery/web/nuarelliye_srilanka.jpg",
     "alt": "Nuarelliye Srilanka",
-    "w": 646,
-    "h": 1400
-  },
-  {
-    "src": "/gallery/web/sahabuddin_park1.jpg",
-    "alt": "Sahabuddin Park1",
     "w": 646,
     "h": 1400
   },

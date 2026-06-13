@@ -1,41 +1,15 @@
-"use client";
+import { Globe, Clapperboard } from "lucide-react";
+import { getVisiblePhotos } from "@/lib/gallery";
+import GalleryGrid from "./GalleryGrid";
 
-import { useCallback, useEffect, useState } from "react";
-import { X, ChevronLeft, ChevronRight, Globe, Clapperboard } from "lucide-react";
+const countries = [
+  { name: "India", flag: "🇮🇳" },
+  { name: "Maldives", flag: "🇲🇻" },
+  { name: "Sri Lanka", flag: "🇱🇰" },
+];
 
-const countries = ["India", "Maldives", "Sri Lanka"];
-import manifest from "./gallery-manifest.json";
-
-type Photo = { src: string; alt: string; w?: number; h?: number };
-const photos = manifest as Photo[];
-
-export default function GallerySection() {
-  const [active, setActive] = useState<number | null>(null);
-
-  const close = useCallback(() => setActive(null), []);
-  const next = useCallback(
-    () => setActive((i) => (i === null ? i : (i + 1) % photos.length)),
-    []
-  );
-  const prev = useCallback(
-    () => setActive((i) => (i === null ? i : (i - 1 + photos.length) % photos.length)),
-    []
-  );
-
-  useEffect(() => {
-    if (active === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-      if (e.key === "ArrowRight") next();
-      if (e.key === "ArrowLeft") prev();
-    };
-    window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [active, close, next, prev]);
+export default async function GallerySection() {
+  const photos = await getVisiblePhotos();
 
   return (
     <section id="gallery" className="py-20 sm:py-28 scroll-mt-16">
@@ -56,10 +30,11 @@ export default function GallerySection() {
             <ul className="flex flex-wrap gap-2">
               {countries.map((c) => (
                 <li
-                  key={c}
-                  className="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-medium text-ink-soft"
+                  key={c.name}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-medium text-ink-soft"
                 >
-                  {c}
+                  <span aria-hidden="true">{c.flag}</span>
+                  {c.name}
                 </li>
               ))}
             </ul>
@@ -70,83 +45,8 @@ export default function GallerySection() {
           </div>
         </div>
 
-        {/* Masonry via CSS columns */}
-        <div className="reveal-up mt-12 [column-count:2] sm:[column-count:3] lg:[column-count:4] gap-4">
-          {photos.map((photo, i) => (
-            <button
-              key={photo.src}
-              type="button"
-              onClick={() => setActive(i)}
-              className="group mb-4 block w-full overflow-hidden rounded-xl bg-slate-100 break-inside-avoid focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
-              aria-label={`Open photo ${i + 1}`}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                loading="lazy"
-                width={photo.w}
-                height={photo.h}
-                style={photo.w && photo.h ? { aspectRatio: `${photo.w} / ${photo.h}` } : undefined}
-                className="w-full transition-opacity duration-300 group-hover:opacity-90"
-              />
-            </button>
-          ))}
-        </div>
+        <GalleryGrid photos={photos} />
       </div>
-
-      {/* Lightbox */}
-      {active !== null && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 p-4"
-          onClick={close}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Photo viewer"
-        >
-          <button
-            onClick={close}
-            aria-label="Close"
-            className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
-          >
-            <X className="h-5 w-5" />
-          </button>
-
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              prev();
-            }}
-            aria-label="Previous photo"
-            className="absolute left-3 sm:left-6 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
-          >
-            <ChevronLeft className="h-6 w-6" />
-          </button>
-
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={photos[active].src}
-            alt={photos[active].alt}
-            className="max-h-[85vh] max-w-full rounded-lg object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
-
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              next();
-            }}
-            aria-label="Next photo"
-            className="absolute right-3 sm:right-6 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
-          >
-            <ChevronRight className="h-6 w-6" />
-          </button>
-
-          <span className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-3 py-1 text-sm text-white tabular-nums">
-            {active + 1} / {photos.length}
-          </span>
-        </div>
-      )}
     </section>
   );
 }
