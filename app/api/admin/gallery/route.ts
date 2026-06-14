@@ -22,7 +22,21 @@ export async function PATCH(req: Request) {
     updates.push({ src: u.src, sortOrder: u.sortOrder, visible: u.visible });
   }
 
-  await savePhotoOrder(updates);
+  try {
+    await savePhotoOrder(updates);
+  } catch (e) {
+    const code = (e as NodeJS.ErrnoException)?.code;
+    if (code === "EROFS" || code === "EACCES") {
+      return NextResponse.json(
+        {
+          error:
+            "Read-only filesystem. The gallery is edited locally: run the site with `pnpm dev`, save here, then commit & push gallery-manifest.json.",
+        },
+        { status: 409 }
+      );
+    }
+    throw e;
+  }
   revalidatePath("/"); // refresh the public gallery on the homepage
   return NextResponse.json({ ok: true });
 }

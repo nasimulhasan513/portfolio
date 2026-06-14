@@ -1,106 +1,67 @@
-import { db, ensureSchema } from "./db";
+import { promises as fs } from "fs";
+import path from "path";
 
-export type Photo = {
-  src: string;
-  alt: string;
-  w?: number;
-  h?: number;
-};
+/**
+ * Gallery data lives in components/gallery-manifest.json — the single source of
+ * truth, committed to the repo. The public site reads it at BUILD time (SSG, no
+ * runtime DB, zero server load), so it works on Vercel with no Turso/SQLite.
+ *
+ * Display order = array order. A photo with `"hidden": true` is skipped on the
+ * public site. The /admin screen edits this file locally (drag-reorder + toggle),
+ * then you commit + push and Vercel rebuilds the static page.
+ */
+export type Photo = { src: string; alt: string; w?: number; h?: number };
+export type RawPhoto = Photo & { hidden?: boolean };
+export type AdminPhoto = Photo & { sortOrder: number; visible: boolean };
 
-export type AdminPhoto = Photo & {
-  sortOrder: number;
-  visible: boolean;
-};
+const MANIFEST = path.join(process.cwd(), "components/gallery-manifest.json");
 
-/** Visible photos in admin-defined order — used by the public gallery. */
+async function readManifest(): Promise<RawPhoto[]> {
+  const txt = await fs.readFile(MANIFEST, "utf8");
+  return JSON.parse(txt) as RawPhoto[];
+}
+
+/** Visible photos, in order — used by the public gallery + marquee (static). */
 export async function getVisiblePhotos(): Promise<Photo[]> {
-  await ensureSchema();
-  const rs = await db.execute(
-    "SELECT src, alt, w, h FROM gallery_photos WHERE visible = 1 ORDER BY sort_order ASC, src ASC"
-  );
-  return rs.rows.map((r) => ({
-    src: r.src as string,
-    alt: r.alt as string,
-    w: (r.w as number | null) ?? undefined,
-    h: (r.h as number | null) ?? undefined,
-  }));
+  const all = await readManifest();
+  return all
+    .filter((p) => !p.hidden)
+    .map(({ src, alt, w, h }) => ({ src, alt, w, h }));
 }
 
 /** Every photo (incl. hidden) in order — used by the admin screen. */
 export async function getAllPhotos(): Promise<AdminPhoto[]> {
-  await ensureSchema();
-  const rs = await db.execute(
-    "SELECT src, alt, w, h, sort_order, visible FROM gallery_photos ORDER BY sort_order ASC, src ASC"
-  );
-  return rs.rows.map((r) => ({
-    src: r.src as string,
-    alt: r.alt as string,
-    w: (r.w as number | null) ?? undefined,
-    h: (r.h as number | null) ?? undefined,
-    sortOrder: r.sort_order as number,
-    visible: Boolean(r.visible),
+  const all = await readManifest();
+  return all.map((p, i) => ({
+    src: p.src,
+    alt: p.alt,
+    w: p.w,
+    h: p.h,
+    sortOrder: i,
+    visible: !p.hidden,
   }));
 }
 
 export type PhotoUpdate = { src: string; sortOrder: number; visible: boolean };
 
-/** Persist new ordering + visibility for the given photos in one transaction. */
-export async function savePhotoOrder(updates: PhotoUpdate[]): Promise<void> {
-  await ensureSchema();
-  const tx = await db.transaction("write");
-  try {
-    for (const u of updates) {
-      await tx.execute({
-        sql: "UPDATE gallery_photos SET sort_order = ?, visible = ? WHERE src = ?",
-        args: [u.sortOrder, u.visible ? 1 : 0, u.src],
-      });
-    }
-    await tx.commit();
-  } catch (e) {
-    await tx.rollback();
-    throw e;
-  }
-}
-
 /**
- * Seed the table from a manifest the first time, and reconcile with disk:
- * insert rows that are new, drop rows whose file no longer exists. Existing
- * rows keep their admin-set order/visibility. Safe to run repeatedly.
+ * Persist new order + visibility by rewriting the manifest JSON. Works on a
+ * writable filesystem (local dev); on Vercel's read-only FS this throws, which
+ * is expected — editing is a local-then-commit workflow.
  */
-export async function seedFromManifest(manifest: Photo[]): Promise<void> {
-  await ensureSchema();
-  const rs = await db.execute("SELECT src, sort_order FROM gallery_photos");
-  const existing = new Map(rs.rows.map((r) => [r.src as string, r.sort_order as number]));
-  const manifestSrcs = new Set(manifest.map((p) => p.src));
+export async function savePhotoOrder(updates: PhotoUpdate[]): Promise<void> {
+  const all = await readManifest();
+  const bySrc = new Map(all.map((p) => [p.src, p]));
+  const ordered = [...updates].sort((a, b) => a.sortOrder - b.sortOrder);
 
-  let nextOrder = existing.size ? Math.max(...existing.values()) + 1 : 0;
+  const next: RawPhoto[] = ordered.map((u) => {
+    const base = bySrc.get(u.src) ?? { src: u.src, alt: "" };
+    const obj: RawPhoto = { src: base.src, alt: base.alt };
+    if (base.w != null) obj.w = base.w;
+    if (base.h != null) obj.h = base.h;
+    if (!u.visible) obj.hidden = true;
+    return obj;
+  });
 
-  const tx = await db.transaction("write");
-  try {
-    // Insert new photos at the end, preserving manifest order.
-    for (const p of manifest) {
-      if (existing.has(p.src)) {
-        // Keep order/visibility; refresh metadata in case dimensions changed.
-        await tx.execute({
-          sql: "UPDATE gallery_photos SET alt = ?, w = ?, h = ? WHERE src = ?",
-          args: [p.alt, p.w ?? null, p.h ?? null, p.src],
-        });
-      } else {
-        await tx.execute({
-          sql: "INSERT INTO gallery_photos (src, alt, w, h, sort_order, visible) VALUES (?, ?, ?, ?, ?, 1)",
-          args: [p.src, p.alt, p.w ?? null, p.h ?? null, nextOrder++],
-        });
-      }
-    }
-    // Remove photos no longer present in the manifest (deleted from disk).
-    for (const src of existing.keys()) {
-      if (!manifestSrcs.has(src)) {
-        await tx.execute({ sql: "DELETE FROM gallery_photos WHERE src = ?", args: [src] });
-      }
-    }
-    await tx.commit();
-  } catch (e) {
-    await tx.rollback();
-    throw e;
-  }
+  await fs.writeFile(MANIFEST, JSON.stringify(next, null, 2) + "\n", "utf8");
 }

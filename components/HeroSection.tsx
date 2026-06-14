@@ -1,10 +1,38 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { AnimatePresence, motion } from "framer-motion";
 import FadeIn from "./ui/FadeIn";
 import ContactButton from "./ui/ContactButton";
 
 const HeroObject = dynamic(() => import("./HeroObject"), { ssr: false });
+
+const NAMES = ["nasimul", "hasan", "deep"];
+
+function RotatingName() {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setI((v) => (v + 1) % NAMES.length), 2000);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <span className="relative inline-flex overflow-hidden align-bottom">
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={NAMES[i]}
+          initial={{ y: "0.5em", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: "-0.5em", opacity: 0 }}
+          transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+          className="inline-block"
+        >
+          {NAMES[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
 
 export default function HeroSection() {
   return (
@@ -31,14 +59,18 @@ export default function HeroSection() {
         <FadeIn delay={0.1} y={20}>
           <span className="eyebrow">Nasimul Hasan Deep — Backend Engineer / CTO</span>
         </FadeIn>
-        <div className="overflow-hidden">
+        {/* Stable heading for SEO + screen readers */}
+        <h1 className="sr-only">
+          I&apos;m Nasimul Hasan Deep — Backend Engineer &amp; CTO
+        </h1>
+        {/* Animated visual headline */}
+        <div className="overflow-hidden" aria-hidden="true">
           <FadeIn
-            as="h1"
             delay={0.15}
             y={40}
-            className="hero-heading mt-4 w-full whitespace-nowrap text-[15vw] font-black uppercase leading-none tracking-tight sm:text-[15vw] md:text-[16vw] lg:text-[15vw]"
+            className="hero-heading mt-4 flex w-full whitespace-nowrap text-[15vw] font-black uppercase leading-none tracking-tight md:text-[16vw] lg:text-[15vw]"
           >
-            i&apos;m nasimul
+            i&apos;m&nbsp;<RotatingName />
           </FadeIn>
         </div>
       </div>
