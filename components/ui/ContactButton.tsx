@@ -1,8 +1,9 @@
+import { ArrowUpRight } from "lucide-react";
 import Magnet from "./Magnet";
 
 export default function ContactButton({
   href = "#contact",
-  label = "Contact Me",
+  label = "Contact me",
 }: {
   href?: string;
   label?: string;
@@ -11,17 +12,10 @@ export default function ContactButton({
     <Magnet padding={80} strength={4} className="inline-block">
       <a
         href={href}
-        className="inline-block rounded-full px-8 py-3 text-xs font-medium uppercase tracking-widest text-white transition-transform duration-200 hover:scale-[1.03] sm:px-10 sm:py-3.5 sm:text-sm md:px-12 md:py-4 md:text-base"
-        style={{
-          background:
-            "linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)",
-          boxShadow:
-            "0px 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721B1 inset",
-          outline: "2px solid #fff",
-          outlineOffset: "-3px",
-        }}
+        className="group inline-flex items-center gap-2.5 rounded-full bg-ink px-8 py-3.5 text-sm font-medium tracking-wide text-[color:var(--bg)] transition-colors duration-200 hover:bg-accent hover:text-accent-contrast sm:px-10 sm:py-4 sm:text-base"
       >
         {label}
+        <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
       </a>
     </Magnet>
   );

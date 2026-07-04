@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { twMerge } from "tailwind-merge";
+import ThemeToggle from "./ui/ThemeToggle";
 
 const navItems = [
-  { name: "About", href: "#about" },
-  { name: "Work", href: "#experience" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Gallery", href: "#gallery" },
+  { name: "about", href: "#about" },
+  { name: "experience", href: "#experience" },
+  { name: "projects", href: "#projects" },
+  { name: "toolkit", href: "#skills" },
+  { name: "gallery", href: "#gallery" },
 ];
 
 export default function NavBar() {
@@ -29,62 +30,61 @@ export default function NavBar() {
       className={twMerge(
         "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
         isScrolled
-          ? "border-b border-line bg-base/80 backdrop-blur-md"
+          ? "border-b border-line bg-base/85 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
       )}
     >
-      <nav className="container-px flex h-16 items-center justify-between md:h-20">
+      <nav className="container-px flex h-16 items-center justify-between md:h-[72px]">
         <Link
           href="/"
-          className="font-display text-xl font-black uppercase tracking-tight text-ink"
+          className="font-display text-2xl font-extrabold lowercase tracking-tight text-ink"
         >
-          Deep<span className="brand-text">.</span>
+          deep<span className="text-accent">.</span>
         </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-7 md:flex">
           {navItems.map((item) => (
             <a
               key={item.name}
               href={item.href}
-              className="text-sm font-medium uppercase tracking-wider text-ink-soft transition-opacity duration-200 hover:opacity-70"
+              className="font-mono text-[0.8rem] lowercase tracking-wide text-ink-soft transition-colors hover:text-accent"
             >
               {item.name}
             </a>
           ))}
+          <ThemeToggle />
           <a
             href="#contact"
-            className="rounded-full px-5 py-2 text-sm font-medium uppercase tracking-wider text-white"
-            style={{
-              background:
-                "linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)",
-              outline: "2px solid #fff",
-              outlineOffset: "-3px",
-            }}
+            className="rounded-full bg-ink px-5 py-2 font-mono text-[0.8rem] lowercase tracking-wide text-[color:var(--bg)] transition-colors hover:bg-accent hover:text-accent-contrast"
           >
-            Contact
+            contact
           </a>
         </div>
 
-        <button
-          className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-ink hover:bg-base-elev md:hidden"
-          onClick={() => setIsMenuOpen((v) => !v)}
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMenuOpen}
-        >
-          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line text-ink"
+            onClick={() => setIsMenuOpen((v) => !v)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+          >
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </nav>
 
       {isMenuOpen && (
         <div className="border-t border-line bg-base md:hidden">
           <div className="container-px flex flex-col py-2">
-            {[...navItems, { name: "Contact", href: "#contact" }].map((item) => (
+            {[...navItems, { name: "contact", href: "#contact" }].map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="py-3 text-base font-medium uppercase tracking-wider text-ink-soft hover:text-ink"
+                className="border-b border-line py-3.5 font-mono text-sm lowercase tracking-wide text-ink-soft last:border-b-0 hover:text-accent"
               >
+                <span className="mr-2 text-accent">//</span>
                 {item.name}
               </a>
             ))}

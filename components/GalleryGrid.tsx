@@ -43,7 +43,7 @@ export default function GalleryGrid({ photos }: { photos: Photo[] }) {
             key={photo.src}
             type="button"
             onClick={() => setActive(i)}
-            className="group mb-4 block w-full overflow-hidden rounded-xl bg-base-elev break-inside-avoid focus:outline-none focus-visible:ring-2 focus-visible:ring-grad-2 focus-visible:ring-offset-2 focus-visible:ring-offset-base"
+            className="group mb-4 block w-full overflow-hidden rounded-xl border border-line bg-base-elev break-inside-avoid focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-base"
             aria-label={`Open photo ${i + 1}`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -54,7 +54,7 @@ export default function GalleryGrid({ photos }: { photos: Photo[] }) {
               width={photo.w}
               height={photo.h}
               style={photo.w && photo.h ? { aspectRatio: `${photo.w} / ${photo.h}` } : undefined}
-              className="w-full transition-opacity duration-300 group-hover:opacity-90"
+              className="w-full transition-transform duration-500 group-hover:scale-[1.03]"
             />
           </button>
         ))}

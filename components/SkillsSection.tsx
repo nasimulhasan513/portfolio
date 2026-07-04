@@ -8,58 +8,56 @@ import {
 } from "lucide-react";
 import FadeIn from "./ui/FadeIn";
 
-type Skill =
-  | { name: string; slug: string; color: string }
-  | { name: string; icon: LucideIcon };
+type Skill = { name: string; slug: string } | { name: string; icon: LucideIcon };
 
 type Category = { title: string; items: Skill[] };
 
 const categories: Category[] = [
   {
-    title: "Backend",
+    title: "backend/",
     items: [
-      { name: "Node.js", slug: "nodedotjs", color: "#5FA04E" },
-      { name: "Express", slug: "express", color: "#475569" },
-      { name: "Python", slug: "python", color: "#3776AB" },
-      { name: "Flask", slug: "flask", color: "#475569" },
-      { name: "Go", slug: "go", color: "#007D9C" },
-      { name: "PHP / Laravel", slug: "laravel", color: "#F0502F" },
+      { name: "Node.js", slug: "nodedotjs" },
+      { name: "Express", slug: "express" },
+      { name: "Python", slug: "python" },
+      { name: "Flask", slug: "flask" },
+      { name: "Go", slug: "go" },
+      { name: "PHP / Laravel", slug: "laravel" },
     ],
   },
   {
-    title: "Databases",
+    title: "databases/",
     items: [
-      { name: "PostgreSQL", slug: "postgresql", color: "#4169E1" },
-      { name: "MongoDB", slug: "mongodb", color: "#47A248" },
-      { name: "MySQL", slug: "mysql", color: "#4479A1" },
-      { name: "Prisma", slug: "prisma", color: "#2D3748" },
-      { name: "Redis", slug: "redis", color: "#DC382D" },
+      { name: "PostgreSQL", slug: "postgresql" },
+      { name: "MongoDB", slug: "mongodb" },
+      { name: "MySQL", slug: "mysql" },
+      { name: "Prisma", slug: "prisma" },
+      { name: "Redis", slug: "redis" },
     ],
   },
   {
-    title: "Frontend",
+    title: "frontend/",
     items: [
-      { name: "TypeScript", slug: "typescript", color: "#3178C6" },
-      { name: "JavaScript", slug: "javascript", color: "#B59100" },
-      { name: "Vue.js", slug: "vuedotjs", color: "#42B883" },
-      { name: "Nuxt", slug: "nuxtdotjs", color: "#00A971" },
-      { name: "React", slug: "react", color: "#149ECA" },
-      { name: "Next.js", slug: "nextdotjs", color: "#475569" },
-      { name: "Tailwind", slug: "tailwindcss", color: "#0891B2" },
+      { name: "TypeScript", slug: "typescript" },
+      { name: "JavaScript", slug: "javascript" },
+      { name: "Vue.js", slug: "vuedotjs" },
+      { name: "Nuxt", slug: "nuxtdotjs" },
+      { name: "React", slug: "react" },
+      { name: "Next.js", slug: "nextdotjs" },
+      { name: "Tailwind", slug: "tailwindcss" },
     ],
   },
   {
-    title: "Cloud & DevOps",
+    title: "cloud-devops/",
     items: [
-      { name: "AWS", slug: "amazonwebservices", color: "#232F3E" },
-      { name: "Docker", slug: "docker", color: "#2496ED" },
-      { name: "Nginx", slug: "nginx", color: "#009639" },
-      { name: "Linux", slug: "linux", color: "#475569" },
+      { name: "AWS", slug: "amazonwebservices" },
+      { name: "Docker", slug: "docker" },
+      { name: "Nginx", slug: "nginx" },
+      { name: "Linux", slug: "linux" },
       { name: "CI/CD", icon: InfinityIcon },
     ],
   },
   {
-    title: "APIs & Architecture",
+    title: "apis-architecture/",
     items: [
       { name: "REST APIs", icon: Webhook },
       { name: "WebSockets", icon: ArrowLeftRight },
@@ -68,24 +66,24 @@ const categories: Category[] = [
     ],
   },
   {
-    title: "Tools",
+    title: "tools/",
     items: [
-      { name: "Git", slug: "git", color: "#F05032" },
-      { name: "Postman", slug: "postman", color: "#FF6C37" },
-      { name: "Google Apps Script", slug: "googleappsscript", color: "#4285F4" },
+      { name: "Git", slug: "git" },
+      { name: "Postman", slug: "postman" },
+      { name: "Google Apps Script", slug: "googleappsscript" },
     ],
   },
 ];
 
 function Chip({ skill }: { skill: Skill }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-xl border border-line bg-base-elev px-3 py-2 text-sm font-medium text-ink-soft transition-colors hover:border-[#D7E2EA]/40 hover:text-ink">
+    <span className="inline-flex items-center gap-2 rounded-lg border border-line bg-base-elev px-3 py-2 font-mono text-[0.8rem] text-ink-soft transition-colors hover:border-accent/60 hover:text-accent">
       {"slug" in skill ? (
         <span
           aria-hidden
-          className="h-[18px] w-[18px] shrink-0 bg-no-repeat"
+          className="h-[16px] w-[16px] shrink-0 bg-no-repeat"
           style={{
-            backgroundColor: "#D7E2EA",
+            backgroundColor: "currentColor",
             WebkitMaskImage: `url(/tech/${skill.slug}.svg)`,
             maskImage: `url(/tech/${skill.slug}.svg)`,
             WebkitMaskRepeat: "no-repeat",
@@ -97,7 +95,7 @@ function Chip({ skill }: { skill: Skill }) {
           }}
         />
       ) : (
-        <skill.icon className="h-[18px] w-[18px] shrink-0 text-ink-muted" strokeWidth={2} />
+        <skill.icon className="h-[16px] w-[16px] shrink-0" strokeWidth={2} />
       )}
       {skill.name}
     </span>
@@ -106,29 +104,30 @@ function Chip({ skill }: { skill: Skill }) {
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="scroll-mt-24 bg-base py-24 sm:py-32">
+    <section id="skills" className="scroll-mt-20 bg-base-soft py-24 sm:py-32">
       <div className="container-px">
         <div className="max-w-3xl">
           <FadeIn as="span" className="eyebrow">
-            Toolkit
+            toolkit
           </FadeIn>
           <FadeIn
             as="h2"
             delay={0.05}
-            className="mt-5 text-[clamp(2.5rem,8vw,6rem)] font-black uppercase leading-[0.95] tracking-tight"
+            className="mt-5 font-display text-[clamp(2.5rem,7vw,5.5rem)] font-extrabold uppercase leading-[0.95] tracking-tight"
           >
-            What i build <span className="brand-text">with</span>
+            What I build with
           </FadeIn>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
+        <div className="mt-14 grid gap-5 md:grid-cols-2">
           {categories.map((cat, i) => (
             <FadeIn
               key={cat.title}
-              delay={(i % 2) * 0.08}
-              className="rounded-3xl border border-line bg-base-soft p-6"
+              delay={(i % 2) * 0.07}
+              className="rounded-2xl border border-line bg-base p-6"
             >
-              <h3 className="mb-4 font-mono text-xs uppercase tracking-widest text-ink-muted">
+              <h3 className="mb-4 font-mono text-sm text-ink-muted">
+                <span className="text-accent">~/</span>
                 {cat.title}
               </h3>
               <div className="flex flex-wrap gap-2">

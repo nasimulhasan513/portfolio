@@ -13,26 +13,36 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative flex min-h-[80vh] scroll-mt-24 flex-col items-center justify-center overflow-hidden bg-base px-5 py-24 text-center sm:px-8 md:px-10"
+      className="relative flex min-h-[85vh] scroll-mt-20 flex-col items-center justify-center overflow-hidden bg-base-soft px-5 py-24 text-center sm:px-8 md:px-10"
     >
-      {/* glow */}
+      {/* dot grid + glow */}
       <div
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[60vh] w-[60vh] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30 blur-[140px]"
-        style={{ background: "radial-gradient(circle, #B600A8 0%, transparent 70%)" }}
+        className="dot-grid pointer-events-none absolute inset-0"
+        style={{
+          maskImage: "radial-gradient(ellipse 60% 55% at 50% 50%, black 20%, transparent 75%)",
+          WebkitMaskImage: "radial-gradient(ellipse 60% 55% at 50% 50%, black 20%, transparent 75%)",
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[55vh] w-[55vw] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[130px]"
+        style={{ background: "radial-gradient(circle, var(--glow) 0%, transparent 70%)" }}
+        aria-hidden="true"
       />
 
       <div className="relative z-10 flex flex-col items-center">
         <FadeIn as="span" className="eyebrow">
-          Contact
+          contact
         </FadeIn>
         <FadeIn
           as="h2"
           delay={0.05}
-          className="hero-heading mt-5 text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight"
+          className="mt-6 max-w-5xl font-display text-[clamp(2.6rem,8vw,6.5rem)] font-extrabold uppercase leading-[0.95] tracking-tight"
         >
-          Let&apos;s talk
+          Let&apos;s build something <span className="text-outline">reliable</span>
+          <span className="text-accent">.</span>
         </FadeIn>
-        <FadeIn as="p" delay={0.1} className="mt-6 max-w-md text-lg font-light text-ink-soft">
+        <FadeIn as="p" delay={0.1} className="mt-7 max-w-md text-lg text-ink-soft">
           Have a project in mind or just want to say hello? I&apos;m happy to chat — the easiest
           way to reach me is by email.
         </FadeIn>
@@ -49,7 +59,7 @@ export default function ContactSection() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-line text-ink-soft transition-colors hover:border-[#D7E2EA] hover:text-ink"
+              className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-line text-ink-soft transition-colors hover:border-accent hover:text-accent"
             >
               <Icon className="h-5 w-5" />
             </a>
@@ -58,9 +68,9 @@ export default function ContactSection() {
 
         <a
           href="#top"
-          className="mt-14 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-ink-muted transition-colors hover:text-ink"
+          className="mt-14 inline-flex items-center gap-1.5 font-mono text-xs lowercase tracking-[0.2em] text-ink-muted transition-colors hover:text-accent"
         >
-          Back to top
+          back to top
           <ArrowRight className="h-3.5 w-3.5 -rotate-90" />
         </a>
       </div>

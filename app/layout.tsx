@@ -1,25 +1,23 @@
-import type { Metadata } from "next";
-import { Kanit, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Bricolage_Grotesque, Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 
-const kanit = Kanit({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-kanit",
+  variable: "--font-bricolage",
   display: "swap",
 });
-const spaceGrotesk = Space_Grotesk({
+const instrument = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-instrument",
+  display: "swap",
+});
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
-  variable: "--font-space-grotesk",
-  display: "swap",
-});
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jetbrains-mono",
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
@@ -50,6 +48,16 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f6f4ee" },
+    { media: "(prefers-color-scheme: dark)", color: "#141210" },
+  ],
+};
+
+// Runs before paint: restores the saved theme (falls back to system preference).
+const themeInit = `(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t=window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.setAttribute("data-theme",t)}catch(e){document.documentElement.setAttribute("data-theme","dark")}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -58,9 +66,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${kanit.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} scroll-smooth`}
+      data-theme="dark"
+      suppressHydrationWarning
+      className={`${bricolage.variable} ${instrument.variable} ${plexMono.variable} scroll-smooth`}
     >
-      <body className="bg-base text-ink antialiased">
+      <body className="bg-base font-sans text-ink antialiased">
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+        <div className="grain" aria-hidden="true" />
         <NavBar />
         <main style={{ overflowX: "clip" }}>{children}</main>
         <Footer />

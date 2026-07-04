@@ -1,91 +1,74 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import { AnimatePresence, motion } from "framer-motion";
+import { ArrowDown } from "lucide-react";
 import FadeIn from "./ui/FadeIn";
-import ContactButton from "./ui/ContactButton";
-
-const HeroObject = dynamic(() => import("./HeroObject"), { ssr: false });
-
-const NAMES = ["nasimul", "hasan", "deep"];
-
-function RotatingName() {
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setI((v) => (v + 1) % NAMES.length), 2000);
-    return () => clearInterval(t);
-  }, []);
-  return (
-    <span className="relative inline-flex overflow-hidden align-bottom">
-      <AnimatePresence mode="wait">
-        <motion.span
-          key={NAMES[i]}
-          initial={{ y: "0.5em", opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: "-0.5em", opacity: 0 }}
-          transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
-          className="inline-block"
-        >
-          {NAMES[i]}
-        </motion.span>
-      </AnimatePresence>
-    </span>
-  );
-}
+import Terminal from "./Terminal";
 
 export default function HeroSection() {
   return (
-    <section
-      id="top"
-      className="relative flex h-screen min-h-[640px] flex-col"
-      style={{ overflowX: "clip" }}
-    >
-      {/* 3D core — centred backdrop */}
-      <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
-        <div className="h-[70vh] w-[70vh] max-w-[900px] opacity-90">
-          <HeroObject />
-        </div>
-      </div>
-
-      {/* ambient glow */}
+    <section id="top" className="relative" style={{ overflowX: "clip" }}>
+      {/* dot grid, faded toward the edges */}
       <div
-        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[60vh] w-[60vh] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 blur-[120px]"
-        style={{ background: "radial-gradient(circle, #7621B0 0%, transparent 70%)" }}
+        className="dot-grid pointer-events-none absolute inset-0"
+        style={{
+          maskImage: "radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 75%)",
+          WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 75%)",
+        }}
+        aria-hidden="true"
+      />
+      {/* soft amber glow */}
+      <div
+        className="pointer-events-none absolute right-[-10%] top-[10%] h-[55vh] w-[55vw] rounded-full blur-[120px]"
+        style={{ background: "radial-gradient(circle, var(--glow) 0%, transparent 70%)" }}
+        aria-hidden="true"
       />
 
-      {/* Heading block */}
-      <div className="container-px relative z-10 mt-auto">
-        <FadeIn delay={0.1} y={20}>
-          <span className="eyebrow">Nasimul Hasan Deep — Backend Engineer / CTO</span>
-        </FadeIn>
-        {/* Stable heading for SEO + screen readers */}
-        <h1 className="sr-only">
-          I&apos;m Nasimul Hasan Deep — Backend Engineer &amp; CTO
-        </h1>
-        {/* Animated visual headline */}
-        <div className="overflow-hidden" aria-hidden="true">
-          <FadeIn
-            delay={0.15}
-            y={40}
-            className="hero-heading mt-4 flex w-full whitespace-nowrap text-[15vw] font-black uppercase leading-none tracking-tight md:text-[16vw] lg:text-[15vw]"
-          >
-            i&apos;m&nbsp;<RotatingName />
+      <div className="container-px relative z-10 flex min-h-svh flex-col justify-end pb-10 pt-28 sm:pb-12 lg:pt-32">
+        <div className="grid items-end gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+          {/* headline */}
+          <div>
+            <FadeIn delay={0.05} y={16}>
+              <span className="eyebrow">lead backend engineer &amp; cto — dhaka, bangladesh</span>
+            </FadeIn>
+            <h1 className="mt-6 font-display text-[clamp(3.4rem,12.5vw,10rem)] font-extrabold uppercase leading-[0.88] tracking-tight">
+              <FadeIn as="span" delay={0.12} y={40} className="block">
+                Nasimul
+              </FadeIn>
+              <FadeIn as="span" delay={0.2} y={40} className="text-outline block">
+                Hasan
+              </FadeIn>
+              <FadeIn as="span" delay={0.28} y={40} className="block">
+                Deep<span className="text-accent">.</span>
+              </FadeIn>
+            </h1>
+            <FadeIn
+              as="p"
+              delay={0.4}
+              y={20}
+              className="mt-7 max-w-md text-base leading-relaxed text-ink-soft sm:text-lg"
+            >
+              I build the systems people don&apos;t see — and notice instantly when they fail.
+              Learning platforms and online stores, kept fast, safe, and online for tens of
+              thousands of people across Bangladesh.
+            </FadeIn>
+          </div>
+
+          {/* terminal */}
+          <FadeIn delay={0.5} y={30}>
+            <Terminal />
           </FadeIn>
         </div>
-      </div>
 
-      {/* Bottom bar */}
-      <div className="container-px relative z-10 flex items-end justify-between pb-7 sm:pb-8 md:pb-12">
+        {/* bottom strip */}
         <FadeIn
-          delay={0.35}
-          y={20}
-          className="max-w-[180px] text-[clamp(0.75rem,1.4vw,1.5rem)] font-light uppercase leading-snug tracking-wide text-ink sm:max-w-[240px] md:max-w-[300px]"
+          delay={0.7}
+          y={10}
+          className="mt-12 flex items-center justify-between border-t border-line pt-5 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-ink-muted sm:mt-14"
         >
-          a backend engineer &amp; cto building systems that stay fast, safe and online for tens of thousands of people.
-        </FadeIn>
-        <FadeIn delay={0.5} y={20}>
-          <ContactButton />
+          <a href="#about" className="inline-flex items-center gap-2 transition-colors hover:text-accent">
+            scroll
+            <ArrowDown className="h-3.5 w-3.5 animate-bounce" />
+          </a>
+          <span className="hidden sm:inline">systems that stay online</span>
+          <span>23.81°N / 90.41°E</span>
         </FadeIn>
       </div>
     </section>

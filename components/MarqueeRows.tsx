@@ -2,24 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 
-function Row({ images, dir }: { images: string[]; dir: 1 | -1 }) {
+function Row({ images }: { images: string[] }) {
   const tripled = [...images, ...images, ...images];
   return (
     <div className="flex gap-3" style={{ willChange: "transform" }}>
       {tripled.map((src, i) => (
         <div
           key={i}
-          className="relative shrink-0 overflow-hidden rounded-2xl bg-base-elev"
-          style={{ width: 420, height: 270 }}
+          className="relative shrink-0 overflow-hidden rounded-xl border border-line bg-base-elev"
+          style={{ width: 360, height: 230 }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={src}
-            alt=""
-            loading="lazy"
-            className="h-full w-full object-cover"
-            style={{ transform: dir === 1 ? undefined : undefined }}
-          />
+          <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" />
         </div>
       ))}
     </div>
@@ -56,10 +50,10 @@ export default function MarqueeRows({
   return (
     <div ref={sectionRef} className="flex flex-col gap-3 overflow-hidden">
       <div style={{ transform: `translateX(${offset - 200}px)`, willChange: "transform" }}>
-        <Row images={rowA} dir={1} />
+        <Row images={rowA} />
       </div>
       <div style={{ transform: `translateX(${-(offset - 200)}px)`, willChange: "transform" }}>
-        <Row images={rowB} dir={-1} />
+        <Row images={rowB} />
       </div>
     </div>
   );

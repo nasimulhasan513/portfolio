@@ -1,10 +1,10 @@
 import HeroSection from "@/components/HeroSection";
-import MarqueeSection from "@/components/MarqueeSection";
+import Ticker from "@/components/Ticker";
 import AboutSection from "@/components/AboutSection";
 import CapabilitiesSection from "@/components/CapabilitiesSection";
 import ExperienceSection from "@/components/ExperienceSection";
-import SkillsSection from "@/components/SkillsSection";
 import ProjectsSection from "@/components/ProjectsSection";
+import SkillsSection from "@/components/SkillsSection";
 import GallerySection from "@/components/GallerySection";
 import ContactSection from "@/components/ContactSection";
 
@@ -12,12 +12,12 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <MarqueeSection />
+      <Ticker />
       <AboutSection />
       <CapabilitiesSection />
       <ExperienceSection />
-      <SkillsSection />
       <ProjectsSection />
+      <SkillsSection />
       <GallerySection />
       <ContactSection />
     </>
