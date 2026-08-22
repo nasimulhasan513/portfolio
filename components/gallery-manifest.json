@@ -138,12 +138,6 @@
     "h": 1400
   },
   {
-    "src": "/gallery/web/20250409_213301.jpg",
-    "alt": "Photo from Nasimul's collection",
-    "w": 646,
-    "h": 1400
-  },
-  {
     "src": "/gallery/web/20250503_203609.jpg",
     "alt": "Photo from Nasimul's collection",
     "w": 920,
@@ -258,12 +252,6 @@
     "h": 646
   },
   {
-    "src": "/gallery/web/20260112_191009.jpg",
-    "alt": "Photo from Nasimul's collection",
-    "w": 646,
-    "h": 1400
-  },
-  {
     "src": "/gallery/web/20260124_163849.jpg",
     "alt": "Photo from Nasimul's collection",
     "w": 646,
@@ -343,7 +331,7 @@
   },
   {
     "src": "/gallery/web/from_cox_to_dhaka.jpg",
-    "alt": "From Cox To Dhaka",
+    "alt": "On the tarmac, flying from Cox's Bazar to Dhaka",
     "w": 646,
     "h": 1400
   },
@@ -355,7 +343,7 @@
   },
   {
     "src": "/gallery/web/nuarelliye_srilanka.jpg",
-    "alt": "Nuarelliye Srilanka",
+    "alt": "Cycling in Nuwara Eliya, Sri Lanka",
     "w": 646,
     "h": 1400
   },

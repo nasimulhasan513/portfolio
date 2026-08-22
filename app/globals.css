@@ -3,33 +3,35 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ---------------------------------------------------------------------------
-   Theme tokens — "production console"
-   Dark: warm graphite + amber phosphor. Light: warm paper + deep amber.
+   Theme tokens — palette derived from the portrait (deep.png):
+   charcoal #1a1714 (suit), ivory #e1e1d7 (shirt/light), warm greige (curtain),
+   sage-teal #c3d3d0 (floor) deepened into an accessible accent.
+   Light: warm ivory + deep teal. Dark: soft charcoal + sage teal.
 --------------------------------------------------------------------------- */
 :root {
-  --bg: #f6f4ee;
-  --bg-soft: #eeebe2;
-  --bg-elev: #fffdf8;
-  --fg: #1d1a15;
-  --fg-soft: #5d5749;
-  --fg-muted: #8f887a;
-  --border-c: rgba(29, 26, 21, 0.14);
-  --accent: #b36a0a;
-  --accent-contrast: #fffdf8;
-  --glow: rgba(179, 106, 10, 0.09);
+  --bg: #faf9f6;
+  --bg-soft: #f0eee8;
+  --bg-elev: #ffffff;
+  --fg: #1a1714;
+  --fg-soft: #57534a;
+  --fg-muted: #8b867a;
+  --border-c: rgba(26, 23, 20, 0.12);
+  --accent: #16756a;
+  --accent-contrast: #ffffff;
+  --glow: rgba(22, 117, 106, 0.08);
 }
 
 [data-theme="dark"] {
-  --bg: #141210;
-  --bg-soft: #1a1713;
-  --bg-elev: #221e18;
-  --fg: #ece5d6;
-  --fg-soft: #b3aa98;
-  --fg-muted: #79715f;
-  --border-c: rgba(236, 229, 214, 0.13);
-  --accent: #f5a83c;
-  --accent-contrast: #141210;
-  --glow: rgba(245, 168, 60, 0.07);
+  --bg: #131513;
+  --bg-soft: #1a1d1a;
+  --bg-elev: #212521;
+  --fg: #e7e5dc;
+  --fg-soft: #aca99d;
+  --fg-muted: #7c8078;
+  --border-c: rgba(231, 229, 220, 0.13);
+  --accent: #64c7b8;
+  --accent-contrast: #0e1f1b;
+  --glow: rgba(100, 199, 184, 0.07);
 }
 
 @theme inline {
@@ -50,11 +52,11 @@
 
 /* Terminal panel — always dark, in both themes (it's a terminal) */
 @theme {
-  --color-term-bg: #16130d;
-  --color-term-fg: #ddd3bc;
-  --color-term-muted: #877d67;
-  --color-term-line: rgba(221, 211, 188, 0.14);
-  --color-term-accent: #f5a83c;
+  --color-term-bg: #101413;
+  --color-term-fg: #d6dfd9;
+  --color-term-muted: #7c877f;
+  --color-term-line: rgba(214, 223, 217, 0.14);
+  --color-term-accent: #64c7b8;
 }
 
 @layer base {
@@ -151,18 +153,6 @@
     background-image: radial-gradient(var(--dot, var(--border-c)) 1px, transparent 1px);
     background-size: 26px 26px;
   }
-}
-
-/* Film-grain overlay, sits above everything at very low opacity */
-.grain {
-  position: fixed;
-  inset: 0;
-  z-index: 80;
-  pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: soft-light;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
 }
 
 /* Ticker marquee */

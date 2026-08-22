@@ -20,7 +20,7 @@ const featured: Project[] = [
     name: "ACS Future School",
     logo: "/projects/acsfutureschool-logo.png",
     url: "https://acsfutureschool.com/",
-    category: "lead backend engineer",
+    category: "tech lead",
     blurb:
       "Bangladesh's leading online school — live classes, quizzes, and exam prep for classes 6–10 and admission tests, stable for thousands of daily users.",
   },

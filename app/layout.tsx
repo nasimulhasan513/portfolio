@@ -23,8 +23,8 @@ const plexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nasimulhasandeep.com"),
-  title: "Nasimul Hasan Deep | Lead Backend Engineer & CTO",
-  description: "Nasimul Hasan Deep — Lead Backend Engineer at ACS Future School and CTO at Rhombus Publications. I build reliable, fast, and secure web systems.",
+  title: "Nasimul Hasan Deep | Tech Lead & CTO",
+  description: "Nasimul Hasan Deep — Tech Lead at ACS Future School and CTO at Rhombus Publications. I build reliable, fast, and secure web systems.",
   keywords: ["Nasimul Hasan Deep", "Backend Engineer", "CTO", "Node.js", "PostgreSQL", "AWS", "Software Engineer", "Portfolio"],
   authors: [{ name: "Nasimul Hasan Deep" }],
   creator: "Nasimul Hasan Deep",
@@ -32,16 +32,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://nasimulhasandeep.com",
-    title: "Nasimul Hasan Deep | Lead Backend Engineer & CTO",
+    title: "Nasimul Hasan Deep | Tech Lead & CTO",
     description: "I build reliable, fast, and secure web systems used by tens of thousands of people.",
     siteName: "Nasimul Hasan Deep Portfolio",
-    images: [{ url: "/icon.png", width: 512, height: 512, alt: "Nasimul Hasan Deep" }],
+    images: [{ url: "/images/deep-portrait.jpg", width: 1400, height: 1400, alt: "Nasimul Hasan Deep" }],
   },
   twitter: {
-    card: "summary",
-    title: "Nasimul Hasan Deep | Lead Backend Engineer & CTO",
+    card: "summary_large_image",
+    title: "Nasimul Hasan Deep | Tech Lead & CTO",
     description: "I build reliable, fast, and secure web systems used by tens of thousands of people.",
-    images: ["/icon.png"],
+    images: ["/images/deep-portrait.jpg"],
   },
   icons: {
     icon: "/icon.png",
@@ -50,8 +50,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f6f4ee" },
-    { media: "(prefers-color-scheme: dark)", color: "#141210" },
+    { media: "(prefers-color-scheme: light)", color: "#faf9f6" },
+    { media: "(prefers-color-scheme: dark)", color: "#131513" },
   ],
 };
 
@@ -72,7 +72,6 @@ export default function RootLayout({
     >
       <body className="bg-base font-sans text-ink antialiased">
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
-        <div className="grain" aria-hidden="true" />
         <NavBar />
         <main style={{ overflowX: "clip" }}>{children}</main>
         <Footer />

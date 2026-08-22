@@ -27,7 +27,7 @@ const experiences: Experience[] = [
     ],
   },
   {
-    role: "Lead Backend Engineer",
+    role: "Tech Lead",
     company: "ACS Future School",
     url: "https://acsfutureschool.com/about-us",
     period: "oct 2024 — now",

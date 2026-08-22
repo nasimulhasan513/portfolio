@@ -11,7 +11,7 @@ type Line =
 
 const LINES: Line[] = [
   { kind: "cmd", text: "whoami" },
-  { kind: "out", text: "nasimul hasan deep — lead backend engineer & cto" },
+  { kind: "out", text: "nasimul hasan deep — tech lead & cto" },
   { kind: "gap" },
   { kind: "cmd", text: "uptime" },
   { kind: "out", text: "4+ years in production · 10 products live" },
@@ -110,8 +110,8 @@ export default function Terminal() {
       {/* window chrome */}
       <div className="flex items-center justify-between border-b border-term-line px-4 py-3">
         <div className="flex items-center gap-1.5" aria-hidden="true">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#4a4234]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#4a4234]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#3a423e]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#3a423e]" />
           <span className="h-2.5 w-2.5 rounded-full bg-term-accent/80" />
         </div>
         <span className="font-mono text-[0.68rem] tracking-[0.18em] text-term-muted">

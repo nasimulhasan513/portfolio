@@ -3,11 +3,12 @@ import FadeIn from "./ui/FadeIn";
 import AnimatedText from "./ui/AnimatedText";
 
 const BIO =
-  "For the last few years I've led the engineering behind learning platforms and an online store used by tens of thousands of people across Bangladesh. As CTO at Rhombus Publications and Lead Backend Engineer at ACS Future School, I help teams ship products that actually work — and stay working.";
+  "For the last few years I've led the engineering behind learning platforms and an online store used by tens of thousands of people across Bangladesh. As CTO at Rhombus Publications and Tech Lead at ACS Future School, I help teams ship products that actually work — and stay working.";
 
 const facts = [
-  { label: "role", value: "lead backend engineer @ acs future school" },
+  { label: "role", value: "tech lead @ acs future school" },
   { label: "also", value: "cto @ rhombus publications" },
+  { label: "study", value: "bsc in cse @ independent university, bangladesh" },
   { label: "base", value: "dhaka, bangladesh" },
   { label: "status", value: "open to interesting problems", live: true },
 ];
@@ -20,15 +21,15 @@ export default function AboutSection() {
         <FadeIn x={-30} y={0} className="mx-auto w-full max-w-md lg:sticky lg:top-28">
           <figure className="overflow-hidden rounded-2xl border border-line bg-base-soft">
             <Image
-              src="/images/about-portrait.jpg"
+              src="/images/deep-portrait.jpg"
               alt="Portrait of Nasimul Hasan Deep"
-              width={640}
-              height={800}
-              className="aspect-[4/5] w-full object-cover"
+              width={1400}
+              height={1400}
+              className="aspect-[4/5] w-full object-cover object-top"
             />
             <figcaption className="flex items-center justify-between border-t border-line px-4 py-3 font-mono text-[0.68rem] tracking-[0.15em] text-ink-muted">
               <span>dhaka, bd</span>
-              <span>portrait.jpg</span>
+              <span>deep.png</span>
             </figcaption>
           </figure>
         </FadeIn>
